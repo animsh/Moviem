@@ -15,12 +15,20 @@
     <color name="colorTextOther">#5AD303</color>
     <color name="colorThemeExtra">#FF5252</color>
 
-    <color name="bottomNavigationColorDark">#171717</color>
+    <color name="bottomNavigationColorDark">#121212</color>
     <color name="backgroundColorDark">#000000</color>
     <color name="searchBackgroundDark">#323232</color>
     <color name="titleTextColorDark">#FFFFFF</color>
     <color name="subtitleTextColorDark">#5FFFFFFF</color>
     <color name="searchIconTintColorDark">#5FFFFFFF</color>
-    <color name="simpleIconTintColor">#FFFFFF</color>
+    <color name="simpleIconTintColorDark">#FFFFFF</color>
+
+    <color name="bottomNavigationColorLight">#FFFFFF</color>
+    <color name="backgroundColorLight">#FFFFFF</color>
+    <color name="searchBackgroundLight">#323232</color>
+    <color name="titleTextColorLight">#121212</color>
+    <color name="subtitleTextColorLight">#757575</color>
+    <color name="searchIconTintColorLight">#757575</color>
+    <color name="simpleIconTintColorLight">#000000</color>
     <color name="redColor">#EE1520</color>
 </resources>
