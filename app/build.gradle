@@ -73,4 +73,10 @@ dependencies {
     // Navigation Components
     implementation 'androidx.navigation:navigation-fragment:2.3.3'
     implementation 'androidx.navigation:navigation-ui:2.3.3'
+
+    compile 'com.jaeger.statusbarutil:library:1.5.1'
+    compile 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    //Optional: see how to use the utility.
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
 }

@@ -1,4 +1,4 @@
-package com.animsh.moviem.home;
+package com.animsh.moviem.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.animsh.moviem.R;
 
-public class ComingSoonFragment extends Fragment {
+public class MovieFragment extends Fragment {
 
-    public ComingSoonFragment() {
+    public MovieFragment() {
         // Required empty public constructor
     }
 
@@ -24,6 +24,6 @@ public class ComingSoonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_coming_soon, container, false);
+        return inflater.inflate(R.layout.fragment_movie, container, false);
     }
 }
