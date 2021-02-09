@@ -20,6 +20,7 @@
         <item name="icon_tint_color">@color/simpleIconTintColorLight</item>
         <item name="search_color">@color/searchIconTintColorLight</item>
         <item name="indicator_color">#9fEE1520</item>
+        <item name="layout_color">@color/backgroundLayoutColorLight</item>
         <item name="fontFamily">@font/monolisa</item>
     </style>
 
