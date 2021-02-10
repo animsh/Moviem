@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui;
+package com.animsh.moviem.activities.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.animsh.moviem.R;
-import com.animsh.moviem.ui.home.MovieFragment;
-import com.animsh.moviem.ui.home.MyListFragment;
-import com.animsh.moviem.ui.home.TvFragment;
+import com.animsh.moviem.activities.ui.home.MovieFragment;
+import com.animsh.moviem.activities.ui.home.MyListFragment;
+import com.animsh.moviem.activities.ui.home.TvFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;

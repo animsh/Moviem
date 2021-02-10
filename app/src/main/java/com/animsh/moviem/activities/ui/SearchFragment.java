@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui.home;
+package com.animsh.moviem.activities.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import com.animsh.moviem.R;
 
-public class MyListFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
-    public MyListFragment() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
@@ -24,6 +24,6 @@ public class MyListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_list, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 }

@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui;
+package com.animsh.moviem.activities.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

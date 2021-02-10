@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.animsh.moviem.ui.HomeFragment"
+        android:name="com.animsh.moviem.activities.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.animsh.moviem.ui.SearchFragment"
+        android:name="com.animsh.moviem.activities.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/comingSoonFragment"
-        android:name="com.animsh.moviem.ui.ComingSoonFragment"
+        android:name="com.animsh.moviem.activities.ui.ComingSoonFragment"
         android:label="fragment_coming_soon"
         tools:layout="@layout/fragment_coming_soon" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.animsh.moviem.ui.MoreFragment"
+        android:name="com.animsh.moviem.activities.ui.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
 </navigation>
