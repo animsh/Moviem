@@ -9,4 +9,9 @@
         app:font="@font/monolisa_medium_italic"
         app:fontStyle="italic"
         app:fontWeight="400" />
+
+    <font
+        app:font="@font/monolisa_bold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
 </font-family>

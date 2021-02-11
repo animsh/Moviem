@@ -12,135 +12,506 @@
         <import type="android.view.View" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/movieRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/background_color"
         tools:context=".activities.ui.home.MovieFragment">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/latest_movie"
-                android:src="@drawable/image_movie" />
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="?attr/layout_color"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="?attr/layout_color"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                            app:layout_constraintStart_toStartOf="@+id/thumbnail"
+                            app:layout_constraintTop_toBottomOf="@+id/thumbnail">
+
+                            <TextView
+                                style="@style/TextAppearance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:text="Overview: "
+                                android:textColor="?attr/text_color"
+                                android:textSize="@dimen/_12sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/latestMovieOverView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:ellipsize="end"
+                                android:lineSpacingExtra="@dimen/_1sdp"
+                                android:maxLines="4"
+                                android:scrollHorizontally="true"
+                                android:text="loading..."
+                                android:textColor="?attr/text_color"
+                                android:textSize="@dimen/_10sdp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView"
+                            style="@style/TextAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="Latest Movie"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/thumbnail"
+                            android:layout_width="@dimen/_120sdp"
+                            android:layout_height="@dimen/_170sdp"
+                            android:layout_margin="@dimen/_20sdp"
+                            android:src="@drawable/placeholder"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView"
+                            app:riv_corner_radius="@dimen/_10sdp" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_20sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/thumbnail"
+                            app:layout_constraintTop_toTopOf="@+id/thumbnail">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Title: "
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/latestMovieTitle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:ellipsize="end"
+                                    android:lineSpacingExtra="1dp"
+                                    android:maxLines="8"
+                                    android:scrollHorizontally="true"
+                                    android:text="loading..."
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_11ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Status: "
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/latestMovieStatus"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="loading..."
+                                    android:textColor="@color/redColor"
+                                    android:textSize="@dimen/_11ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Language: "
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/latestMovieLanguage"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="loading..."
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_11ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Adult: "
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/latestMovieAdult"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="loading..."
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_11ssp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MtButtonStyle"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:insetLeft="0dp"
+                                android:insetTop="0dp"
+                                android:insetRight="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@drawable/ic_round_add_24"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconSize="18dp"
+                                app:iconTint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MtButtonStyle"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:insetLeft="0dp"
+                                android:insetTop="0dp"
+                                android:insetRight="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@drawable/ic_round_favorite_border_24"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconSize="18dp"
+                                app:iconTint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MtButtonStyle"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:insetLeft="0dp"
+                                android:insetTop="0dp"
+                                android:insetRight="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@drawable/ic_ic24_info"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconSize="24dp"
+                                app:iconTint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="Trending"
-                    android:textColor="?attr/text_color"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="?attr/layout_color"
+                    android:orientation="vertical">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_240sdp"
-                    android:layout_marginStart="@dimen/_80sdp"
-                    android:layout_marginEnd="@dimen/_80sdp"
-                    android:layout_marginBottom="@dimen/_10sdp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_10sdp">
 
-            </LinearLayout>
+                        <TextView
+                            style="@style/TextAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:text="Trending Movies"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="?attr/layout_color"
-                android:orientation="vertical">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:drawableTint="@color/redColor"
+                            android:text="More"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_round_arrow_forward_ios_24"
+                            tools:ignore="RtlCompat" />
 
-                <TextView
+                    </LinearLayout>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/trendingMoviesViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_260sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:paddingStart="@dimen/_80sdp"
+                        android:paddingEnd="@dimen/_80sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="Now Playing"
-                    android:textColor="?attr/text_color"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="?attr/layout_color"
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_10sdp">
+
+                        <TextView
+                            style="@style/TextAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:text="Now Playing"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:drawableTint="@color/redColor"
+                            android:text="More"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_round_arrow_forward_ios_24"
+                            tools:ignore="RtlCompat" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nowPlayingMoviesRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="?attr/layout_color"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_10sdp">
+
+                        <TextView
+                            style="@style/TextAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:text="Popular Movies"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:drawableTint="@color/redColor"
+                            android:text="More"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_round_arrow_forward_ios_24"
+                            tools:ignore="RtlCompat" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularMoviesRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    android:background="?attr/layout_color"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_10sdp">
+
+                        <TextView
+                            style="@style/TextAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:text="Top Rated Movies"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_weight="1"
+                            android:drawableTint="@color/redColor"
+                            android:text="More"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/redColor"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            app:drawableEndCompat="@drawable/ic_round_arrow_forward_ios_24"
+                            tools:ignore="RtlCompat" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/topRatedMoviesRV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="@{isLoading ? View.VISIBLE :View.GONE, default = gone}" />
+
+                </FrameLayout>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="?attr/layout_color"
-                android:orientation="vertical">
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="Popular"
-                    android:textColor="?attr/text_color"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="?attr/layout_color"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="Top Rated"
-                    android:textColor="?attr/text_color"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="@{isLoading ? View.VISIBLE :View.GONE, default = gone}" />
-
-            </FrameLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 </layout>

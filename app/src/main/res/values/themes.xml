@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Moviem" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/backgroundColorLight</item>
-        <item name="colorPrimaryVariant">@color/backgroundColorLight</item>
+        <item name="colorPrimary">@color/backgroundLayoutColorLight</item>
+        <item name="colorPrimaryVariant">@color/backgroundLayoutColorLight</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -28,5 +28,25 @@
         <item name="fontFamily">@font/bebas_neue</item>
         <item name="android:fontFamily">@font/bebas_neue</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/monolisa_bold</item>
+        <item name="android:fontFamily">@font/monolisa_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="colorPrimary">@color/redColor</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="MtButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/GreenButtonThemeOverlay</item>
+    </style>
+
+    <style name="GreenButtonThemeOverlay">
+        <item name="colorPrimary">@color/redColor</item>
     </style>
 </resources>
