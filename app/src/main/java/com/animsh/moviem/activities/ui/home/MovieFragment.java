@@ -1,8 +1,8 @@
 package com.animsh.moviem.activities.ui.home;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +23,15 @@ import com.animsh.moviem.R;
 import com.animsh.moviem.adapters.MoviesAdapter;
 import com.animsh.moviem.adapters.TrendingAdapter;
 import com.animsh.moviem.databinding.FragmentMovieBinding;
-import com.animsh.moviem.response.MovieResult;
-import com.animsh.moviem.viewmodels.LatestMovieViewModel;
-import com.animsh.moviem.viewmodels.MostPopularMoviesViewModel;
-import com.animsh.moviem.viewmodels.NowPlayingMoviesViewModel;
-import com.animsh.moviem.viewmodels.TopRatedMoviesViewModel;
-import com.animsh.moviem.viewmodels.TrendingMoviesViewModel;
+import com.animsh.moviem.response.moviesresponse.MovieResult;
+import com.animsh.moviem.viewmodels.moviesviewmodel.LatestMovieViewModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.MostPopularMoviesViewModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.NowPlayingMoviesViewModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.TopRatedMoviesViewModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.TrendingMoviesViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,50 +81,35 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        class LoadAllRecyclerViews extends AsyncTask<Void, Void, Void> {
 
-            @Override
-            protected Void doInBackground(Void... voids) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 doInitialization();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
                 getLatestMovie();
                 getTrendingMovies();
                 getMostPopularMovie();
                 getTopRatedMovies();
                 getNowPlayingMovies();
             }
-        }
-
-        new LoadAllRecyclerViews().execute();
+        }, 1000);
 
         fragmentMovieBinding.movieRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fragmentMovieBinding.trendingMoviesViewPager.setCurrentItem(0, true);
-                sliderHandler.removeCallbacks(sliderRunnable);
-                getLatestMovie();
-                getTrendingMovies();
-                getMostPopularMovie();
-                getTopRatedMovies();
-                getNowPlayingMovies();
-                CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-                compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-                compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
-                    @Override
-                    public void transformPage(@NonNull View page, float position) {
-                        float r = 1 - Math.abs(position);
-                        page.setScaleY(0.85f + r * 0.15f);
+                handler.post(new Runnable() {
+                    public void run() {
+                        fragmentMovieBinding.trendingMoviesViewPager.setCurrentItem(0, true);
+                        getLatestMovie();
+                        getTrendingMovies();
+                        getMostPopularMovie();
+                        getTopRatedMovies();
+                        getNowPlayingMovies();
+
+                        fragmentMovieBinding.movieRefreshLayout.setRefreshing(false);
                     }
                 });
 
-                fragmentMovieBinding.trendingMoviesViewPager.setPageTransformer(compositePageTransformer);
-                sliderHandler.postDelayed(sliderRunnable, 3000);
-                fragmentMovieBinding.movieRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -253,6 +239,7 @@ public class MovieFragment extends Fragment {
             fragmentMovieBinding.latestMovieTitle.setText(latestMovieResponse.getTitle());
             fragmentMovieBinding.latestMovieStatus.setText(latestMovieResponse.getStatus());
             fragmentMovieBinding.latestMovieLanguage.setText(latestMovieResponse.getOriginal_language().toUpperCase());
+            fragmentMovieBinding.latestMovieRuntime.setText(MessageFormat.format("{0} Min.", latestMovieResponse.getRuntime()));
             fragmentMovieBinding.latestMovieOverView.setText(latestMovieResponse.getOverview().isEmpty() ? "null" : latestMovieResponse.getOverview());
             fragmentMovieBinding.latestMovieAdult.setText(latestMovieResponse.isAdult() ? "Yes" : "No");
         });

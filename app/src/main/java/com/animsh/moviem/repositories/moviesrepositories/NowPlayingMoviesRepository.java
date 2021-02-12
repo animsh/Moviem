@@ -1,4 +1,4 @@
-package com.animsh.moviem.repositories;
+package com.animsh.moviem.repositories.moviesrepositories;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.animsh.moviem.network.ApiService;
 import com.animsh.moviem.network.RetrofitClient;
-import com.animsh.moviem.response.UniqueMovieResponse;
+import com.animsh.moviem.response.moviesresponse.UniqueMovieResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -5,14 +5,14 @@
     <data>
 
         <variable
-            name="Movie"
-            type="com.animsh.moviem.response.MovieResult" />
+            name="TV"
+            type="com.animsh.moviem.response.tvshowzresponse.TVShowResult" />
 
     </data>
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:loadImageFromURL="@{Movie.poster_path}"
+        android:loadImageFromURL="@{TV.poster_path}"
         app:riv_corner_radius="@dimen/_5sdp" />
 </layout>

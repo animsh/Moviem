@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.animsh.moviem.R;
-import com.animsh.moviem.databinding.ItemTrendingContainerBinding;
-import com.animsh.moviem.response.MovieResult;
+import com.animsh.moviem.databinding.ItemTrendingMovieContainerBinding;
+import com.animsh.moviem.response.moviesresponse.MovieResult;
 
 import java.util.List;
 
@@ -20,13 +20,6 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
 
     private List<MovieResult> movies;
     private LayoutInflater layoutInflater;
-    private Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            movies.addAll(movies);
-            notifyDataSetChanged();
-        }
-    };
 
     public TrendingAdapter(List<MovieResult> movies) {
         this.movies = movies;
@@ -38,8 +31,8 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
         if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.getContext());
         }
-        ItemTrendingContainerBinding movieBinding = DataBindingUtil.inflate(
-                layoutInflater, R.layout.item_trending_container, parent, false
+        ItemTrendingMovieContainerBinding movieBinding = DataBindingUtil.inflate(
+                layoutInflater, R.layout.item_trending_movie_container, parent, false
         );
         return new MoviesViewHolder(movieBinding);
     }
@@ -56,16 +49,16 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
 
     static class MoviesViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemTrendingContainerBinding itemTrendingContainerBinding;
+        private ItemTrendingMovieContainerBinding itemTrendingMovieContainerBinding;
 
-        public MoviesViewHolder(ItemTrendingContainerBinding itemTrendingContainerBinding) {
-            super(itemTrendingContainerBinding.getRoot());
-            this.itemTrendingContainerBinding = itemTrendingContainerBinding;
+        public MoviesViewHolder(ItemTrendingMovieContainerBinding itemTrendingMovieContainerBinding) {
+            super(itemTrendingMovieContainerBinding.getRoot());
+            this.itemTrendingMovieContainerBinding = itemTrendingMovieContainerBinding;
         }
 
         public void bindMovie(MovieResult movie) {
-            itemTrendingContainerBinding.setMovie(movie);
-            itemTrendingContainerBinding.executePendingBindings();
+            itemTrendingMovieContainerBinding.setMovie(movie);
+            itemTrendingMovieContainerBinding.executePendingBindings();
         }
     }
 }

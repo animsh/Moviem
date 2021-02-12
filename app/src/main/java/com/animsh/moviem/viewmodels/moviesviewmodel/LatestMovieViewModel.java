@@ -1,10 +1,10 @@
-package com.animsh.moviem.viewmodels;
+package com.animsh.moviem.viewmodels.moviesviewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.animsh.moviem.model.Movie;
-import com.animsh.moviem.repositories.LatestMovieRepository;
+import com.animsh.moviem.repositories.moviesrepositories.LatestMovieRepository;
 
 /**
  * Created by animsh on 2/10/2021.

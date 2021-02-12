@@ -147,7 +147,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:gravity="center"
+                                android:gravity="top"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -192,6 +192,32 @@
                                     android:layout_weight="1"
                                     android:text="loading..."
                                     android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_11ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/TextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Runtime: "
+                                    android:textColor="?attr/text_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/latestMovieRuntime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="loading..."
+                                    android:textColor="@color/redColor"
                                     android:textSize="@dimen/_11ssp" />
                             </LinearLayout>
 
@@ -259,7 +285,7 @@
                                 android:insetRight="0dp"
                                 android:insetBottom="0dp"
                                 android:padding="0dp"
-                                app:icon="@drawable/ic_round_favorite_border_24"
+                                app:icon="@drawable/ic_round_share_24"
                                 app:iconGravity="textStart"
                                 app:iconPadding="0dp"
                                 app:iconSize="18dp"
@@ -389,7 +415,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp" />
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:clipToPadding="false"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp" />
 
                 </LinearLayout>
 
@@ -441,7 +470,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp" />
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:clipToPadding="false"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp" />
 
                 </LinearLayout>
 
@@ -494,7 +526,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp" />
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:clipToPadding="false"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp" />
 
                 </LinearLayout>
 

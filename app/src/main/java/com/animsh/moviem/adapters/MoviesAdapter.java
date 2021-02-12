@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ItemMovieContainerBinding;
-import com.animsh.moviem.response.MovieResult;
+import com.animsh.moviem.response.moviesresponse.MovieResult;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.animsh.moviem.repositories;
+package com.animsh.moviem.repositories.moviesrepositories;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

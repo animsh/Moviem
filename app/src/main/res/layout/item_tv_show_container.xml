@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="Movie"
-            type="com.animsh.moviem.response.moviesresponse.MovieResult" />
+            name="TVShow"
+            type="com.animsh.moviem.response.tvshowzresponse.TVShowResult" />
 
     </data>
 
@@ -14,6 +14,6 @@
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_125sdp"
         android:adjustViewBounds="true"
-        android:loadImageFromURL="@{Movie.poster_path}"
+        android:loadImageFromURL="@{TVShow.poster_path}"
         app:riv_corner_radius="@dimen/_5sdp" />
 </layout>

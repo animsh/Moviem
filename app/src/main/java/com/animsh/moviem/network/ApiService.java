@@ -1,8 +1,10 @@
 package com.animsh.moviem.network;
 
 import com.animsh.moviem.model.Movie;
-import com.animsh.moviem.response.CommonMoviesResponse;
-import com.animsh.moviem.response.UniqueMovieResponse;
+import com.animsh.moviem.model.TVShow;
+import com.animsh.moviem.response.moviesresponse.CommonMoviesResponse;
+import com.animsh.moviem.response.moviesresponse.UniqueMovieResponse;
+import com.animsh.moviem.response.tvshowzresponse.TvShowResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -30,6 +32,29 @@ public interface ApiService {
 
     @GET("trending/movie/day")
     Call<CommonMoviesResponse> getTrendingMovies(@Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("tv/airing_today")
+    Call<TvShowResponse> getTVAiringToday(@Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("tv/on_the_air")
+    Call<TvShowResponse> getTVOnAirToday(@Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("tv/popular")
+    Call<TvShowResponse> getPopularTVShow(@Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("tv/top_rated")
+    Call<TvShowResponse> getTopRatedTVShow(@Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("tv/latest")
+    Call<TVShow> getLatestTVShow(@Query("api_key") String apiKey);
+
+    @GET("trending/tv/day")
+    Call<TvShowResponse> getTrendingTVShows(@Query("api_key") String apiKey
             , @Query("page") int page);
 
 }

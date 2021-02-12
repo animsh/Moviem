@@ -1,4 +1,4 @@
-package com.animsh.moviem.response;
+package com.animsh.moviem.response.moviesresponse;
 
 import java.util.List;
 

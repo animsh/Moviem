@@ -1,4 +1,4 @@
-package com.animsh.moviem.response;
+package com.animsh.moviem.response.moviesresponse;
 
 /**
  * Created by animsh on 2/10/2021.
