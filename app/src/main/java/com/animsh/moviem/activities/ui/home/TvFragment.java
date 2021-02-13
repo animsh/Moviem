@@ -1,5 +1,6 @@
 package com.animsh.moviem.activities.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,9 +21,11 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.animsh.moviem.R;
+import com.animsh.moviem.activities.TVShowDetailsActivity;
 import com.animsh.moviem.adapters.TVAdapter;
 import com.animsh.moviem.adapters.TrendingTVAdapter;
 import com.animsh.moviem.databinding.FragmentTvBinding;
+import com.animsh.moviem.listeners.TvListener;
 import com.animsh.moviem.response.tvshowzresponse.TVShowResult;
 import com.animsh.moviem.viewmodels.tvshowsviewmodel.LatestTVShowViewModel;
 import com.animsh.moviem.viewmodels.tvshowsviewmodel.PopularTVShowsViewModel;
@@ -36,7 +39,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TvFragment extends Fragment {
+public class TvFragment extends Fragment implements TvListener {
 
     public boolean isRevert = false;
     private FragmentTvBinding fragmentTvBinding;
@@ -124,7 +127,7 @@ public class TvFragment extends Fragment {
         tvAiringTodayViewModel = new ViewModelProvider(this).get(TVAiringTodayViewModel.class);
         tvOnAirViewModel = new ViewModelProvider(this).get(TVOnAirViewModel.class);
 
-        trendingTVAdapter = new TrendingTVAdapter(trendingTVShows);
+        trendingTVAdapter = new TrendingTVAdapter(trendingTVShows, this);
         fragmentTvBinding.trendingTVShowsViewPager.setAdapter(trendingTVAdapter);
         fragmentTvBinding.trendingTVShowsViewPager.setClipToPadding(false);
         fragmentTvBinding.trendingTVShowsViewPager.setClipChildren(false);
@@ -151,22 +154,22 @@ public class TvFragment extends Fragment {
             }
         });
 
-        popularTVAdapter = new TVAdapter(popularTVShows);
+        popularTVAdapter = new TVAdapter(popularTVShows, this);
         fragmentTvBinding.popularTVShowsRV.setHasFixedSize(true);
         fragmentTvBinding.popularTVShowsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentTvBinding.popularTVShowsRV.setAdapter(popularTVAdapter);
 
-        topRatedTVAdapter = new TVAdapter(topRatedTVShows);
+        topRatedTVAdapter = new TVAdapter(topRatedTVShows, this);
         fragmentTvBinding.topRatedTVShowsRV.setHasFixedSize(true);
         fragmentTvBinding.topRatedTVShowsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentTvBinding.topRatedTVShowsRV.setAdapter(topRatedTVAdapter);
 
-        tvAiringTodayAdapter = new TVAdapter(tvAiringToday);
+        tvAiringTodayAdapter = new TVAdapter(tvAiringToday, this);
         fragmentTvBinding.tvAiringTodayRV.setHasFixedSize(true);
         fragmentTvBinding.tvAiringTodayRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentTvBinding.tvAiringTodayRV.setAdapter(tvAiringTodayAdapter);
 
-        tvOnAirAdapter = new TVAdapter(tvOnAir);
+        tvOnAirAdapter = new TVAdapter(tvOnAir, this);
         fragmentTvBinding.tvOnAirRV.setHasFixedSize(true);
         fragmentTvBinding.tvOnAirRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentTvBinding.tvOnAirRV.setAdapter(tvOnAirAdapter);
@@ -265,5 +268,12 @@ public class TvFragment extends Fragment {
             fragmentTvBinding.latestEPRuntime.setText(latestTVShowsResponse.getEpisode_run_time().isEmpty() ? "null" : MessageFormat.format("{0} Min.", latestTVShowsResponse.getEpisode_run_time().get(0)));
             fragmentTvBinding.latestTVShowOverView.setText(latestTVShowsResponse.getOverview().isEmpty() ? "null" : latestTVShowsResponse.getOverview());
         });
+    }
+
+    @Override
+    public void onTVClicked(TVShowResult tvShowResult) {
+        Intent intent = new Intent(getContext(), TVShowDetailsActivity.class);
+        intent.putExtra("tvId", tvShowResult.getId());
+        getContext().startActivity(intent);
     }
 }

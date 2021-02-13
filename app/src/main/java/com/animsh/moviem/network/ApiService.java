@@ -8,6 +8,7 @@ import com.animsh.moviem.response.tvshowzresponse.TvShowResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -57,4 +58,11 @@ public interface ApiService {
     Call<TvShowResponse> getTrendingTVShows(@Query("api_key") String apiKey
             , @Query("page") int page);
 
+    @GET("movie/{movie_id}")
+    Call<Movie> getMovieDetails(@Path("movie_id") int movie_id
+            , @Query("api_key") String apiKey);
+
+    @GET("tv/{tv_id}")
+    Call<TVShow> getTVShowDetails(@Path("tv_id") int tv_id
+            , @Query("api_key") String apiKey);
 }

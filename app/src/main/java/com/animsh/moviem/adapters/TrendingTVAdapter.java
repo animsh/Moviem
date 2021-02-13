@@ -1,6 +1,7 @@
 package com.animsh.moviem.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ItemTrendingTvContainerBinding;
+import com.animsh.moviem.listeners.TvListener;
 import com.animsh.moviem.response.tvshowzresponse.TVShowResult;
 
 import java.util.List;
@@ -20,9 +22,11 @@ public class TrendingTVAdapter extends RecyclerView.Adapter<TrendingTVAdapter.TV
 
     private List<TVShowResult> tvShows;
     private LayoutInflater layoutInflater;
+    private TvListener tvListener;
 
-    public TrendingTVAdapter(List<TVShowResult> tvShows) {
+    public TrendingTVAdapter(List<TVShowResult> tvShows, TvListener tvListener) {
         this.tvShows = tvShows;
+        this.tvListener = tvListener;
     }
 
     @NonNull
@@ -47,7 +51,7 @@ public class TrendingTVAdapter extends RecyclerView.Adapter<TrendingTVAdapter.TV
         return tvShows.size();
     }
 
-    static class TVViewHolder extends RecyclerView.ViewHolder {
+    class TVViewHolder extends RecyclerView.ViewHolder {
 
         private ItemTrendingTvContainerBinding itemTrendingTvContainerBinding;
 
@@ -59,6 +63,12 @@ public class TrendingTVAdapter extends RecyclerView.Adapter<TrendingTVAdapter.TV
         public void bindTV(TVShowResult tvShowResult) {
             itemTrendingTvContainerBinding.setTV(tvShowResult);
             itemTrendingTvContainerBinding.executePendingBindings();
+            itemTrendingTvContainerBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tvListener.onTVClicked(tvShowResult);
+                }
+            });
         }
     }
 }

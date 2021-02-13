@@ -1,5 +1,6 @@
 package com.animsh.moviem.activities.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,9 +21,11 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.animsh.moviem.R;
+import com.animsh.moviem.activities.MovieDetailsActivity;
 import com.animsh.moviem.adapters.MoviesAdapter;
 import com.animsh.moviem.adapters.TrendingAdapter;
 import com.animsh.moviem.databinding.FragmentMovieBinding;
+import com.animsh.moviem.listeners.MovieListener;
 import com.animsh.moviem.response.moviesresponse.MovieResult;
 import com.animsh.moviem.viewmodels.moviesviewmodel.LatestMovieViewModel;
 import com.animsh.moviem.viewmodels.moviesviewmodel.MostPopularMoviesViewModel;
@@ -35,7 +38,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements MovieListener {
 
     public boolean isRevert = false;
     private FragmentMovieBinding fragmentMovieBinding;
@@ -130,7 +133,7 @@ public class MovieFragment extends Fragment {
         nowPlayingMoviesViewModel = new ViewModelProvider(this).get(NowPlayingMoviesViewModel.class);
         latestMovieViewModel = new ViewModelProvider(this).get(LatestMovieViewModel.class);
 
-        trendingMoviesAdapter = new TrendingAdapter(trendingMovies);
+        trendingMoviesAdapter = new TrendingAdapter(trendingMovies, this);
         fragmentMovieBinding.trendingMoviesViewPager.setAdapter(trendingMoviesAdapter);
         fragmentMovieBinding.trendingMoviesViewPager.setClipToPadding(false);
         fragmentMovieBinding.trendingMoviesViewPager.setClipChildren(false);
@@ -157,17 +160,17 @@ public class MovieFragment extends Fragment {
             }
         });
 
-        nowPlayingAdapter = new MoviesAdapter(nowPlayingMovies);
+        nowPlayingAdapter = new MoviesAdapter(nowPlayingMovies, this);
         fragmentMovieBinding.nowPlayingMoviesRV.setHasFixedSize(true);
         fragmentMovieBinding.nowPlayingMoviesRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentMovieBinding.nowPlayingMoviesRV.setAdapter(nowPlayingAdapter);
 
-        popularAdapter = new MoviesAdapter(popularMovies);
+        popularAdapter = new MoviesAdapter(popularMovies, this);
         fragmentMovieBinding.popularMoviesRV.setHasFixedSize(true);
         fragmentMovieBinding.popularMoviesRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentMovieBinding.popularMoviesRV.setAdapter(popularAdapter);
 
-        topRatedAdapter = new MoviesAdapter(topRatedMovies);
+        topRatedAdapter = new MoviesAdapter(topRatedMovies, this);
         fragmentMovieBinding.topRatedMoviesRV.setHasFixedSize(true);
         fragmentMovieBinding.topRatedMoviesRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fragmentMovieBinding.topRatedMoviesRV.setAdapter(topRatedAdapter);
@@ -243,5 +246,12 @@ public class MovieFragment extends Fragment {
             fragmentMovieBinding.latestMovieOverView.setText(latestMovieResponse.getOverview().isEmpty() ? "null" : latestMovieResponse.getOverview());
             fragmentMovieBinding.latestMovieAdult.setText(latestMovieResponse.isAdult() ? "Yes" : "No");
         });
+    }
+
+    @Override
+    public void onMovieClicked(MovieResult movie) {
+        Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
+        intent.putExtra("movieId", movie.getId());
+        getContext().startActivity(intent);
     }
 }

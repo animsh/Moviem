@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ItemTrendingMovieContainerBinding;
+import com.animsh.moviem.listeners.MovieListener;
 import com.animsh.moviem.response.moviesresponse.MovieResult;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
 
     private List<MovieResult> movies;
     private LayoutInflater layoutInflater;
+    private MovieListener movieListener;
 
-    public TrendingAdapter(List<MovieResult> movies) {
+    public TrendingAdapter(List<MovieResult> movies, MovieListener movieListener) {
         this.movies = movies;
+        this.movieListener = movieListener;
     }
 
     @NonNull
@@ -47,7 +50,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
         return movies.size();
     }
 
-    static class MoviesViewHolder extends RecyclerView.ViewHolder {
+    class MoviesViewHolder extends RecyclerView.ViewHolder {
 
         private ItemTrendingMovieContainerBinding itemTrendingMovieContainerBinding;
 
@@ -59,6 +62,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Movies
         public void bindMovie(MovieResult movie) {
             itemTrendingMovieContainerBinding.setMovie(movie);
             itemTrendingMovieContainerBinding.executePendingBindings();
+            itemTrendingMovieContainerBinding.getRoot().setOnClickListener(view -> movieListener.onMovieClicked(movie));
         }
     }
 }

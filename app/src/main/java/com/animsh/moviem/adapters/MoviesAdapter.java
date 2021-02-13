@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ItemMovieContainerBinding;
+import com.animsh.moviem.listeners.MovieListener;
 import com.animsh.moviem.response.moviesresponse.MovieResult;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     private List<MovieResult> movies;
     private LayoutInflater layoutInflater;
+    private MovieListener movieListener;
 
-    public MoviesAdapter(List<MovieResult> movies) {
+    public MoviesAdapter(List<MovieResult> movies, MovieListener movieListener) {
         this.movies = movies;
+        this.movieListener = movieListener;
     }
 
     @NonNull
@@ -47,7 +50,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         return movies.size();
     }
 
-    static class MoviesViewHolder extends RecyclerView.ViewHolder {
+    class MoviesViewHolder extends RecyclerView.ViewHolder {
 
         private ItemMovieContainerBinding itemMovieContainerBinding;
 
@@ -59,6 +62,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         public void bindMovie(MovieResult movie) {
             itemMovieContainerBinding.setMovie(movie);
             itemMovieContainerBinding.executePendingBindings();
+            itemMovieContainerBinding.getRoot().setOnClickListener(view -> movieListener.onMovieClicked(movie));
         }
     }
 }
