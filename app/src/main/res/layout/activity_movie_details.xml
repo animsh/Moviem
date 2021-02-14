@@ -13,301 +13,329 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/layout_color"
-            android:orientation="vertical"
-            tools:context=".activities.MovieDetailsActivity">
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="?attr/layout_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/blurImageView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:loadBlurImageFromURL="@{Movie.poster_path}"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:radius="20" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="@drawable/poster_background_gradient"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/roundedImageView"
-                    android:layout_width="@dimen/_112sdp"
-                    android:layout_height="@dimen/_160sdp"
-                    android:layout_margin="@dimen/_50sdp"
-                    android:elevation="@dimen/_8sdp"
-                    android:loadImageFromURL="@{Movie.poster_path}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:riv_corner_radius="@dimen/_5sdp" />
-
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/roundedImageView">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:text="@{Movie.release_date}"
-                        android:textColor="?attr/sub_text_color" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:background="@drawable/background_adult_lable"
-                        android:padding="@dimen/_2sdp"
-                        android:setAdultStatus="@{Movie.adult}"
-                        android:text="18+"
-                        android:textColor="?attr/sub_text_color"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:loadMovieRuntime="@{Movie.runtime}"
-                        android:textColor="?attr/sub_text_color" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:text="@{Movie.status}"
-                        android:textColor="?attr/sub_text_color" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tagline"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:text="@{Movie.tagline}"
-                    android:textAlignment="center"
-                    android:textColor="?attr/sub_text_color"
-                    android:visibility="@{!Movie.tagline.empty ? View.VISIBLE :View.GONE, default = gone}"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="@+id/roundedImageView"
-                    app:layout_constraintStart_toStartOf="@+id/roundedImageView"
-                    app:layout_constraintTop_toBottomOf="@+id/tagline">
-
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/MtButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:insetLeft="0dp"
-                        android:insetTop="0dp"
-                        android:insetRight="0dp"
-                        android:insetBottom="0dp"
-                        android:padding="0dp"
-                        app:icon="@drawable/ic_round_add_24"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="18dp"
-                        app:iconTint="@color/white"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/MtButtonStyle"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:insetLeft="0dp"
-                        android:insetTop="0dp"
-                        android:insetRight="0dp"
-                        android:insetBottom="0dp"
-                        android:padding="0dp"
-                        app:icon="@drawable/ic_round_share_24"
-                        app:iconGravity="textStart"
-                        app:iconPadding="0dp"
-                        app:iconSize="18dp"
-                        app:iconTint="@color/white"
-                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:text="@{Movie.overview}"
-                    android:textAlignment="textStart"
-                    android:textColor="?attr/text_color"
-                    android:textSize="@dimen/_8sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="?attr/layout_color"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2">
+                    tools:context=".activities.MovieDetailsActivity">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="?attr/layout_color"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            style="@style/MyCustomFontTextAppearance"
+                        <ImageView
+                            android:id="@+id/blurImageView"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:loadBlurImageFromURL="@{Movie.poster_path}"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:radius="20" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/poster_background_gradient"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/roundedImageView"
+                            android:layout_width="@dimen/_112sdp"
+                            android:layout_height="@dimen/_160sdp"
+                            android:layout_margin="@dimen/_50sdp"
+                            android:elevation="@dimen/_8sdp"
+                            android:loadImageFromURL="@{Movie.poster_path}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:riv_corner_radius="@dimen/_5sdp" />
+
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/netflix_sans_medium"
-                            android:text="Genres:  "
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/roundedImageView">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:text="@{Movie.release_date}"
+                                android:textColor="?attr/sub_text_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:background="@drawable/background_adult_lable"
+                                android:padding="@dimen/_2sdp"
+                                android:setAdultStatus="@{Movie.adult}"
+                                android:text="18+"
+                                android:textColor="?attr/sub_text_color"
+                                android:textSize="@dimen/_10ssp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:loadMovieRuntime="@{Movie.runtime}"
+                                android:textColor="?attr/sub_text_color" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:text="@{Movie.status}"
+                                android:textColor="?attr/sub_text_color" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tagline"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:loadMovieGenres="@{Movie.genres}"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:text="@{Movie.tagline}"
+                            android:textAlignment="center"
                             android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-                    </LinearLayout>
+                            android:visibility="@{!Movie.tagline.empty ? View.VISIBLE :View.GONE, default = gone}"
+                            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
-                    <LinearLayout
+                        <LinearLayout
+                            android:id="@+id/linearLayout5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_5sdp"
+                            app:layout_constraintEnd_toEndOf="@+id/roundedImageView"
+                            app:layout_constraintStart_toStartOf="@+id/roundedImageView"
+                            app:layout_constraintTop_toBottomOf="@+id/tagline">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MtButtonStyle"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:insetLeft="0dp"
+                                android:insetTop="0dp"
+                                android:insetRight="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@drawable/ic_round_add_24"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconSize="18dp"
+                                app:iconTint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MtButtonStyle"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:insetLeft="0dp"
+                                android:insetTop="0dp"
+                                android:insetRight="0dp"
+                                android:insetBottom="0dp"
+                                android:padding="0dp"
+                                app:icon="@drawable/ic_round_share_24"
+                                app:iconGravity="textStart"
+                                app:iconPadding="0dp"
+                                app:iconSize="18dp"
+                                app:iconTint="@color/white"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:text="@{Movie.overview}"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/text_color"
+                            android:textSize="@dimen/_8sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/MyCustomFontTextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/netflix_sans_medium"
+                                    android:text="Genres:  "
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:loadMovieGenres="@{Movie.genres}"
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/MyCustomFontTextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/netflix_sans_medium"
+                                    android:text="Production Companies:  "
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:loadProductionCompanies="@{Movie.production_companies}"
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/MyCustomFontTextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/netflix_sans_medium"
+                                    android:text="Production Countries:  "
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:loadProductionCountries="@{Movie.production_countries}"
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/MyCustomFontTextAppearance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/netflix_sans_medium"
+                                    android:text="Spoken Languages:  "
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:loadSpokenLanguages="@{Movie.spoken_languages}"
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_8sdp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/MyCustomFontTextAppearance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/netflix_sans_medium"
-                            android:text="Production Companies:  "
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:loadProductionCompanies="@{Movie.production_companies}"
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/MyCustomFontTextAppearance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/netflix_sans_medium"
-                            android:text="Production Countries:  "
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:loadProductionCountries="@{Movie.production_countries}"
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/MyCustomFontTextAppearance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/netflix_sans_medium"
-                            android:text="Spoken Languages:  "
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:loadSpokenLanguages="@{Movie.spoken_languages}"
-                            android:textColor="?attr/sub_text_color"
-                            android:textSize="@dimen/_8sdp" />
-                    </LinearLayout>
-
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:alpha="0.3"
+                        android:background="?sub_text_color" />
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:alpha="0.3"
-                android:background="?sub_text_color" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
@@ -320,16 +348,8 @@
                 app:tabIndicatorHeight="@dimen/_4sdp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="?attr/text_color"
-                app:tabTextAppearance="@style/TextAppearance">
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                app:tabTextAppearance="@style/TextAppearance" />
+        </androidx.viewpager.widget.ViewPager>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

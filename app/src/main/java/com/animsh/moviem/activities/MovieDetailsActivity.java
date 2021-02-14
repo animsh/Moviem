@@ -31,10 +31,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         int movieId = getIntent().getIntExtra("movieId", -1);
         getMovieDetails(movieId);
 
+        setSupportActionBar(activityMovieDetailsBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         activityMovieDetailsBinding.tabLayout.setupWithViewPager(activityMovieDetailsBinding.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(new SimilarMoviesFragment(), "MORE LIKE THIS");
+        viewPagerAdapter.addFragment(new SimilarMoviesFragment(movieId), "MORE LIKE THIS");
         activityMovieDetailsBinding.viewPager.setAdapter(viewPagerAdapter);
     }
 

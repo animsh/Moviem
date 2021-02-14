@@ -10,9 +10,21 @@
 
     </data>
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:loadImageFromURL="@{Movie.poster_path}"
-        app:riv_corner_radius="@dimen/_5sdp" />
+        android:layout_height="match_parent">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder"
+            app:riv_corner_radius="@dimen/_5sdp" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:loadImageFromURL="@{Movie.poster_path}"
+            app:riv_corner_radius="@dimen/_5sdp" />
+
+    </FrameLayout>
 </layout>

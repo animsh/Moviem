@@ -65,4 +65,9 @@ public interface ApiService {
     @GET("tv/{tv_id}")
     Call<TVShow> getTVShowDetails(@Path("tv_id") int tv_id
             , @Query("api_key") String apiKey);
+
+    @GET("movie/{movie_id}/similar")
+    Call<CommonMoviesResponse> getSimilarMovies(@Path("movie_id") int movie_id
+            , @Query("api_key") String apiKey
+            , @Query("page") int page);
 }
