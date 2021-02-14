@@ -21,12 +21,9 @@
         <item name="search_color">@color/searchIconTintColorDark</item>
         <item name="indicator_color">#9FEE1520</item>
         <item name="layout_color">@color/backgroundLayoutColorDark</item>
-        <item name="fontFamily">@font/monolisa</item>
+        <item name="gradient_color">@color/blurImageGradientColorDark</item>
+        <item name="sub_text_color">@color/subtitleTextColorDark</item>
+        <item name="fontFamily">@font/netflix_sans</item>
     </style>
 
-    <style name="MyCustomFontTextAppearance" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/bebas_neue</item>
-        <item name="android:fontFamily">@font/bebas_neue</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 </resources>

@@ -1,15 +1,22 @@
 package com.animsh.moviem.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ActivityMovieDetailsBinding;
 import com.animsh.moviem.viewmodels.moviesviewmodel.MovieDetailsVieModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
@@ -23,11 +30,49 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movieDetailsVieModel = new ViewModelProvider(this).get(MovieDetailsVieModel.class);
         int movieId = getIntent().getIntExtra("movieId", -1);
         getMovieDetails(movieId);
+
+
+        activityMovieDetailsBinding.tabLayout.setupWithViewPager(activityMovieDetailsBinding.viewPager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(new SimilarMoviesFragment(), "MORE LIKE THIS");
+        activityMovieDetailsBinding.viewPager.setAdapter(viewPagerAdapter);
     }
+
 
     void getMovieDetails(int movieId) {
         movieDetailsVieModel.getMovieDetails(movieId, getString(R.string.api_key)).observe(this, movieDetailResponse -> {
-            Toast.makeText(this, "Name: " + movieDetailResponse.getTitle(), Toast.LENGTH_SHORT).show();
+            activityMovieDetailsBinding.setMovie(movieDetailResponse);
         });
+    }
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        List<Fragment> fragmentList = new ArrayList<>();
+        List<String> titleList = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            fragmentList.add(fragment);
+            titleList.add(title);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titleList.get(position);
+        }
     }
 }
