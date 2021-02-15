@@ -6,10 +6,28 @@
 
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/layout_color"
-        tools:context=".activities.SimilarMoviesFragment" />
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/layout_color"
+            android:visibility="gone"
+            tools:context=".activities.SimilarMoviesFragment" />
+
+        <TextView
+            android:id="@+id/labeled"
+            style="@style/TextAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_margin="@dimen/_50sdp"
+            android:text="Not Available!!"
+            android:textColor="@color/redColor"
+            android:textSize="@dimen/_26sdp" />
+    </FrameLayout>
+
 </layout>

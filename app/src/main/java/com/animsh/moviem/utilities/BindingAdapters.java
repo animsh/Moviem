@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 
 import com.animsh.moviem.R;
@@ -13,7 +14,11 @@ import com.animsh.moviem.model.movie.Genre;
 import com.animsh.moviem.model.movie.ProductionCompany;
 import com.animsh.moviem.model.movie.ProductionCountry;
 import com.animsh.moviem.model.movie.SpokenLanguage;
-import com.squareup.picasso.Callback;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -29,17 +34,19 @@ public class BindingAdapters {
     public static void loadImageFromURL(ImageView imageView, String url) {
         try {
             imageView.setAlpha(0f);
-            Picasso.get().load(url).noFade().into(imageView, new Callback() {
+            Glide.with(imageView.getContext()).load(url).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).listener(new RequestListener<Drawable>() {
                 @Override
-                public void onSuccess() {
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, com.bumptech.glide.request.target.Target<Drawable> target, boolean isFirstResource) {
                     imageView.animate().setDuration(300).alpha(1f).start();
+                    return false;
                 }
 
                 @Override
-                public void onError(Exception e) {
-
+                public boolean onResourceReady(Drawable resource, Object model, com.bumptech.glide.request.target.Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    imageView.animate().setDuration(300).alpha(1f).start();
+                    return false;
                 }
-            });
+            }).into(imageView);
         } catch (Exception ignored) {
 
         }
@@ -152,5 +159,14 @@ public class BindingAdapters {
             pcTxt = "?";
         }
         textView.setText(pcTxt.toString());
+    }
+
+    @BindingAdapter("android:loadGender")
+    public static void loadGender(TextView textView, int gender) {
+        if (gender == 2) {
+            textView.setText("Male");
+        } else {
+            textView.setText("Female");
+        }
     }
 }

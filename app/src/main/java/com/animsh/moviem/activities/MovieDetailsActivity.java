@@ -13,7 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.animsh.moviem.R;
 import com.animsh.moviem.databinding.ActivityMovieDetailsBinding;
+import com.animsh.moviem.model.Cast;
+import com.animsh.moviem.model.Crew;
+import com.animsh.moviem.response.moviesresponse.MovieResult;
+import com.animsh.moviem.viewmodels.moviesviewmodel.MovieCreditsViewModel;
 import com.animsh.moviem.viewmodels.moviesviewmodel.MovieDetailsVieModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.RecommendedMoviesViewModel;
+import com.animsh.moviem.viewmodels.moviesviewmodel.SimilarMoviesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +28,33 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private ActivityMovieDetailsBinding activityMovieDetailsBinding;
     private MovieDetailsVieModel movieDetailsVieModel;
+    private SimilarMoviesViewModel similarMoviesViewModel;
+    private RecommendedMoviesViewModel recommendedMoviesViewModel;
+    private MovieCreditsViewModel movieCreditsViewModel;
+
+    private List<MovieResult> movieResults = new ArrayList<>();
+    private List<Cast> casts = new ArrayList<>();
+    private List<Crew> crews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMovieDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
         movieDetailsVieModel = new ViewModelProvider(this).get(MovieDetailsVieModel.class);
+        similarMoviesViewModel = new ViewModelProvider(this).get(SimilarMoviesViewModel.class);
+        recommendedMoviesViewModel = new ViewModelProvider(this).get(RecommendedMoviesViewModel.class);
+        movieCreditsViewModel = new ViewModelProvider(this).get(MovieCreditsViewModel.class);
         int movieId = getIntent().getIntExtra("movieId", -1);
         getMovieDetails(movieId);
 
         setSupportActionBar(activityMovieDetailsBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         activityMovieDetailsBinding.tabLayout.setupWithViewPager(activityMovieDetailsBinding.viewPager);
+        activityMovieDetailsBinding.viewPager.setOffscreenPageLimit(3);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(new SimilarMoviesFragment(movieId), "MORE LIKE THIS");
+        viewPagerAdapter.addFragment(new SimilarMoviesFragment(movieResults, movieId, 1), "MORE LIKE THIS");
+        viewPagerAdapter.addFragment(new SimilarMoviesFragment(movieResults, movieId, 2), "RECOMMENDATIONS");
+        viewPagerAdapter.addFragment(new CreditsFragment(crews, casts, movieId), "CAST & CREW");
         activityMovieDetailsBinding.viewPager.setAdapter(viewPagerAdapter);
     }
 

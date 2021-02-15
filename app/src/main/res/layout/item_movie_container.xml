@@ -10,22 +10,11 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_125sdp"
+        android:adjustViewBounds="true"
+        android:loadImageFromURL="@{Movie.poster_path}"
+        app:riv_corner_radius="@dimen/_5sdp" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_125sdp"
-            android:src="@drawable/placeholder"
-            app:riv_corner_radius="@dimen/_5sdp" />
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_125sdp"
-            android:adjustViewBounds="true"
-            android:loadImageFromURL="@{Movie.poster_path}"
-            app:riv_corner_radius="@dimen/_5sdp" />
-
-    </FrameLayout>
 </layout>

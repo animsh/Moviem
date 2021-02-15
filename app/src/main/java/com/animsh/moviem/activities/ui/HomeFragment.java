@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
                 .add("My List", MyListFragment.class)
                 .create());
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         viewPagerTab.setViewPager(viewPager);
     }
 

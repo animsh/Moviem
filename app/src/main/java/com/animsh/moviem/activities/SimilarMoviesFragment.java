@@ -19,6 +19,7 @@ import com.animsh.moviem.databinding.FragmentSimilarMoviesBinding;
 import com.animsh.moviem.listeners.MovieListener;
 import com.animsh.moviem.response.moviesresponse.MovieResult;
 import com.animsh.moviem.utilities.GridSpacingItemDecoration;
+import com.animsh.moviem.viewmodels.moviesviewmodel.RecommendedMoviesViewModel;
 import com.animsh.moviem.viewmodels.moviesviewmodel.SimilarMoviesViewModel;
 
 import java.util.ArrayList;
@@ -31,12 +32,21 @@ public class SimilarMoviesFragment extends Fragment implements MovieListener {
     boolean includeEdge = true;
     private FragmentSimilarMoviesBinding fragmentSimilarMoviesBinding;
     private SimilarMoviesViewModel similarMoviesViewModel;
+    private RecommendedMoviesViewModel recommendedMoviesViewModel;
     private List<MovieResult> movieResults = new ArrayList<>();
     private MoviesAdapter moviesAdapter;
     private int movieId = -1;
+    private int choice = -1;
 
-    public SimilarMoviesFragment(int movieId) {
+//    public SimilarMoviesFragment(List<MovieResult> movieResults) {
+//        this.movieResults = movieResults;
+//    }
+
+
+    public SimilarMoviesFragment(List<MovieResult> movieResults, int movieId, int choice) {
+        this.movieResults = movieResults;
         this.movieId = movieId;
+        this.choice = choice;
     }
 
     @Override
@@ -47,15 +57,23 @@ public class SimilarMoviesFragment extends Fragment implements MovieListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        similarMoviesViewModel = new ViewModelProvider(this).get(SimilarMoviesViewModel.class);
-
         moviesAdapter = new MoviesAdapter(movieResults, this);
+        similarMoviesViewModel = new ViewModelProvider(this).get(SimilarMoviesViewModel.class);
+        recommendedMoviesViewModel = new ViewModelProvider(this).get(RecommendedMoviesViewModel.class);
         fragmentSimilarMoviesBinding.recyclerView.setHasFixedSize(true);
         fragmentSimilarMoviesBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         fragmentSimilarMoviesBinding.recyclerView.setAdapter(moviesAdapter);
         fragmentSimilarMoviesBinding.recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-        getSimilarMovies();
+        moviesAdapter.notifyDataSetChanged();
+
+
+        if (choice == 1) {
+            getSimilar();
+        } else if (choice == 2) {
+            getRecommended();
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,14 +84,39 @@ public class SimilarMoviesFragment extends Fragment implements MovieListener {
         return view;
     }
 
-    public void getSimilarMovies() {
-        similarMoviesViewModel.getSimilarMovies(movieId, 1, getString(R.string.api_key)).observe(getViewLifecycleOwner(), similarMoviesResponse -> {
+    public void getRecommended() {
+        recommendedMoviesViewModel.getRecommendedMovie(movieId, 1, getString(R.string.api_key)).observe(getViewLifecycleOwner(), similarMoviesResponse -> {
             if (similarMoviesResponse != null) {
-                if (similarMoviesResponse.getResults() != null) {
+                if (!similarMoviesResponse.getResults().isEmpty()) {
                     movieResults.clear();
                     movieResults.addAll(similarMoviesResponse.getResults());
                     moviesAdapter.notifyDataSetChanged();
+                    fragmentSimilarMoviesBinding.labeled.setVisibility(View.GONE);
+                    fragmentSimilarMoviesBinding.recyclerView.setVisibility(View.VISIBLE);
+
+                } else {
+                    fragmentSimilarMoviesBinding.labeled.setVisibility(View.VISIBLE);
                 }
+            } else {
+                fragmentSimilarMoviesBinding.labeled.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void getSimilar() {
+        similarMoviesViewModel.getSimilarMovies(movieId, 1, getString(R.string.api_key)).observe(getViewLifecycleOwner(), similarMoviesResponse -> {
+            if (similarMoviesResponse != null) {
+                if (!similarMoviesResponse.getResults().isEmpty()) {
+                    movieResults.clear();
+                    movieResults.addAll(similarMoviesResponse.getResults());
+                    moviesAdapter.notifyDataSetChanged();
+                    fragmentSimilarMoviesBinding.labeled.setVisibility(View.GONE);
+                    fragmentSimilarMoviesBinding.recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    fragmentSimilarMoviesBinding.labeled.setVisibility(View.VISIBLE);
+                }
+            } else {
+                fragmentSimilarMoviesBinding.labeled.setVisibility(View.VISIBLE);
             }
         });
     }

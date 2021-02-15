@@ -2,6 +2,7 @@ package com.animsh.moviem.network;
 
 import com.animsh.moviem.model.Movie;
 import com.animsh.moviem.model.TVShow;
+import com.animsh.moviem.response.CreditsResponse;
 import com.animsh.moviem.response.moviesresponse.CommonMoviesResponse;
 import com.animsh.moviem.response.moviesresponse.UniqueMovieResponse;
 import com.animsh.moviem.response.tvshowzresponse.TvShowResponse;
@@ -70,4 +71,13 @@ public interface ApiService {
     Call<CommonMoviesResponse> getSimilarMovies(@Path("movie_id") int movie_id
             , @Query("api_key") String apiKey
             , @Query("page") int page);
+
+    @GET("movie/{movie_id}/recommendations")
+    Call<CommonMoviesResponse> getRecommendedMovies(@Path("movie_id") int movie_id
+            , @Query("api_key") String apiKey
+            , @Query("page") int page);
+
+    @GET("movie/{movie_id}/credits")
+    Call<CreditsResponse> getMovieCredits(@Path("movie_id") int movie_id
+            , @Query("api_key") String apiKey);
 }
