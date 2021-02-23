@@ -1,53 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Moviem" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Moviem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/backgroundLayoutColorLight</item>
-        <item name="colorPrimaryVariant">@color/backgroundLayoutColorLight</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Customize your theme here. -->
-        <item name="background_color">@color/backgroundColorLight</item>
-        <item name="bottom_navigation_color">@color/bottomNavigationColorLight</item>
-        <item name="text_color">@color/titleTextColorLight</item>
-        <item name="icon_tint_color">@color/simpleIconTintColorLight</item>
-        <item name="search_color">@color/searchIconTintColorLight</item>
-        <item name="indicator_color">#9fEE1520</item>
-        <item name="layout_color">@color/backgroundLayoutColorLight</item>
-        <item name="gradient_color">@color/blurImageGradientColorLight</item>
-        <item name="sub_text_color">@color/subtitleTextColorLight</item>
-        <item name="fontFamily">@font/netflix_sans</item>
-    </style>
-
-    <style name="MyCustomFontTextAppearance" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/netflix_sans_medium</item>
-        <item name="android:fontFamily">@font/netflix_sans_medium</item>
-    </style>
-
-    <style name="TextAppearance" parent="TextAppearance.AppCompat.Body1">
-        <item name="fontFamily">@font/netflix_sans_bold</item>
-        <item name="android:fontFamily">@font/netflix_sans_bold</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="colorPrimary">@color/redColor</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="MtButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="materialThemeOverlay">@style/GreenButtonThemeOverlay</item>
-    </style>
-
-    <style name="GreenButtonThemeOverlay">
-        <item name="colorPrimary">@color/redColor</item>
     </style>
 </resources>

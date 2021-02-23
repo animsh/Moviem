@@ -1,29 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Moviem" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Moviem" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/backgroundColorDark</item>
-        <item name="colorPrimaryVariant">@color/backgroundColorDark</item>
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
-        <item name="elevationOverlayEnabled">false</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="background_color">@color/backgroundColorDark</item>
-        <item name="bottom_navigation_color">@color/bottomNavigationColorDark</item>
-        <item name="text_color">@color/titleTextColorDark</item>
-        <item name="icon_tint_color">@color/simpleIconTintColorDark</item>
-        <item name="search_color">@color/searchIconTintColorDark</item>
-        <item name="indicator_color">#9FEE1520</item>
-        <item name="layout_color">@color/backgroundLayoutColorDark</item>
-        <item name="gradient_color">@color/blurImageGradientColorDark</item>
-        <item name="sub_text_color">@color/subtitleTextColorDark</item>
-        <item name="fontFamily">@font/netflix_sans</item>
     </style>
-
 </resources>
