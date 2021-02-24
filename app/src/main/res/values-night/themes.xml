@@ -25,5 +25,7 @@
         <item name="sub_text_color">@color/subtitleTextColorDark</item>
         <item name="bottom_navigation_icon_color">#5FFFFFFF</item>
         <item name="fontFamily">@font/netflix_sans</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

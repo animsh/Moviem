@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.animsh.moviem.HomeFragment"
+        android:name="com.animsh.moviem.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/comingSoonFragment"
-        android:name="com.animsh.moviem.ComingSoonFragment"
+        android:name="com.animsh.moviem.ui.comingsoon.ComingSoonFragment"
         android:label="Coming Soon"
         tools:layout="@layout/fragment_coming_soon" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.animsh.moviem.MoreFragment"
+        android:name="com.animsh.moviem.ui.more.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more" />
 </navigation>

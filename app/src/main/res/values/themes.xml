@@ -26,11 +26,19 @@
         <item name="sub_text_color">@color/subtitleTextColorLight</item>
         <item name="bottom_navigation_icon_color">#000000</item>
         <item name="fontFamily">@font/netflix_sans</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="MyCustomFontTextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="fontFamily">@font/netflix_sans_medium</item>
         <item name="android:fontFamily">@font/netflix_sans_medium</item>
+    </style>
+
+    <style name="TabText" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/netflix_sans_medium</item>
+        <item name="android:fontFamily">@font/netflix_sans_medium</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
     </style>
 
     <style name="TextAppearance" parent="TextAppearance.AppCompat.Body1">
