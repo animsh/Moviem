@@ -7,4 +7,33 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorPrimaryLight">#1E2746</color>
+    <color name="colorTextPrimary">#CBD5ED</color>
+    <color name="colorTextSecondary">#4A5B82</color>
+    <color name="colorTextOther">#5AD303</color>
+    <color name="colorThemeExtra">#FF5252</color>
+
+    <color name="bottomNavigationColorDark">#0F0F0F</color>
+    <color name="backgroundColorDark">#000000</color>
+    <color name="backgroundLayoutColorDark">#000000</color>
+    <color name="searchBackgroundDark">#323232</color>
+    <color name="titleTextColorDark">#FFFFFF</color>
+    <color name="subtitleTextColorDark">#8FFFFFFF</color>
+    <color name="searchIconTintColorDark">#5FFFFFFF</color>
+    <color name="simpleIconTintColorDark">#FFFFFF</color>
+    <color name="blurImageGradientColorDark">#000000</color>
+
+    <color name="bottomNavigationColorLight">#FFFFFF</color>
+    <color name="backgroundColorLight">#FFFFFF</color>
+    <color name="backgroundLayoutColorLight">#FFFFFF</color>
+    <color name="searchBackgroundLight">#323232</color>
+    <color name="titleTextColorLight">#121212</color>
+    <color name="subtitleTextColorLight">#757575</color>
+    <color name="searchIconTintColorLight">#757575</color>
+    <color name="simpleIconTintColorLight">#000000</color>
+    <color name="blurImageGradientColorLight">#FFFFFF</color>
+    <color name="redColor">#EE1520</color>
+
 </resources>
