@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.animsh.moviem.R
+import kotlinx.android.synthetic.main.fragment_tv_shows.view.*
 
 class TvShowsFragment : Fragment() {
 
@@ -14,6 +15,16 @@ class TvShowsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_shows, container, false)
+        val view = inflater.inflate(R.layout.fragment_tv_shows, container, false)
+
+        view.posterShimmer.showShimmer(true)
+        view.genreRecyclerview.showShimmer()
+        view.trendingTvShowRecyclerview.showShimmer()
+        view.airingTodayTvShowRecyclerview.showShimmer()
+        view.onAirTvShowRecyclerview.showShimmer()
+        view.popularTvShowRecyclerview.showShimmer()
+        view.topTvShowRecyclerview.showShimmer()
+
+        return view
     }
 }

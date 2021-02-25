@@ -71,7 +71,6 @@
                     android:background="@android:color/transparent"
                     android:elevation="0dp"
                     app:tabSelectedTextColor="@color/redColor"
-                    app:tabTextAppearance="@style/TabText"
                     app:tabTextColor="?attr/text_color" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

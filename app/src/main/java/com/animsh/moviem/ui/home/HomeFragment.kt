@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
 
         tabLayout.setupWithViewPager(viewPager)
         val viewPagerAdapter: ViewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(TvShowsFragment(), "TV Show")
+        viewPagerAdapter.addFragment(TvShowsFragment(), "TV Shows")
         viewPagerAdapter.addFragment(MoviesFragment(), "Movies")
         viewPagerAdapter.addFragment(MyListFragment(), "My List")
         viewPager.adapter = viewPagerAdapter
