@@ -1,5 +1,6 @@
-package com.animsh.moviem.data
+package com.animsh.moviem.data.repositories
 
+import com.animsh.moviem.data.RemoteDataSource
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 

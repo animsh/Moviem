@@ -27,10 +27,11 @@ class HomeFragment : Fragment() {
 
         tabLayout.setupWithViewPager(viewPager)
         val viewPagerAdapter: ViewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(TvShowsFragment(), "TV Shows")
         viewPagerAdapter.addFragment(MoviesFragment(), "Movies")
+        viewPagerAdapter.addFragment(TvShowsFragment(), "TV Shows")
         viewPagerAdapter.addFragment(MyListFragment(), "My List")
         viewPager.adapter = viewPagerAdapter
+        viewPager.offscreenPageLimit = 3
 
     }
 

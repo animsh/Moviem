@@ -1,219 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.MoviesFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="LatestMovie"
+            type="com.animsh.moviem.models.movie.Movie" />
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            tools:context=".ui.home.MoviesFragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/poster"
-                    android:layout_width="@dimen/_112sdp"
-                    android:layout_height="@dimen/_160sdp"
-                    android:layout_margin="@dimen/_20sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:riv_corner_radius="@dimen/_5sdp" />
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/posterShimmer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_20sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <View
-                        android:layout_width="@dimen/_112sdp"
-                        android:layout_height="@dimen/_160sdp"
-                        android:alpha="0.5"
-                        android:background="@color/subtitleTextColorLight"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </com.facebook.shimmer.ShimmerFrameLayout>
-
-                <com.todkars.shimmer.ShimmerRecyclerView
-                    android:id="@+id/genreRecyclerview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/poster"
-                    app:shimmer_recycler_item_count="3"
-                    app:shimmer_recycler_layout="@layout/layout_genre_container_placeholder" />
-
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/genreRecyclerview">
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:loadImageFromURL="@{LatestMovie.posterPath}"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/gradient_background"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/poster"
+                            android:layout_width="@dimen/_112sdp"
+                            android:layout_height="@dimen/_160sdp"
+                            android:layout_margin="@dimen/_20sdp"
+                            android:loadImageFromURL="@{LatestMovie.posterPath}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:riv_corner_radius="@dimen/_5sdp" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/posterShimmer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_20sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <View
+                                android:id="@+id/posterShimmerChild"
+                                android:layout_width="@dimen/_112sdp"
+                                android:layout_height="@dimen/_160sdp"
+                                android:alpha="0.5"
+                                android:background="@color/subtitleTextColorLight"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        <LinearLayout
+                            android:id="@+id/otherDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/poster">
+
+                            <TextView
+                                android:id="@+id/title"
+                                style="@style/MyCustomFontTextAppearance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_20sdp"
+                                android:layout_marginEnd="@dimen/_20sdp"
+                                android:layout_marginBottom="@dimen/_6sdp"
+                                android:text="@{LatestMovie.title}"
+                                android:textAlignment="center"
+                                android:textSize="@dimen/_14ssp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:loadStatus="@{LatestMovie.status}"
+                                    android:textAlignment="viewEnd"
+                                    android:textColor="?attr/text_color" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_5sdp"
+                                    android:layout_weight="1"
+                                    android:loadRuntime="@{LatestMovie.runtime}"
+                                    android:textAlignment="viewStart"
+                                    android:textColor="?attr/text_color" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/otherDetails">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/_30sdp"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:text="My List"
+                                android:textAlignment="center"
+                                android:textColor="?attr/text_color"
+                                android:textSize="@dimen/_8ssp"
+                                app:drawableTint="?attr/text_color"
+                                app:drawableTopCompat="@drawable/ic_round_add_24" />
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/MyCustomFontTextAppearance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Info"
+                                android:textAllCaps="false"
+                                android:textColor="?attr/background_color"
+                                android:textSize="@dimen/_12ssp"
+                                app:backgroundTint="?attr/text_color"
+                                app:icon="@drawable/ic_baseline_info_24"
+                                app:iconGravity="start" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_30sdp"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:text="Share"
+                                android:textAlignment="center"
+                                android:textColor="?attr/text_color"
+                                android:textSize="@dimen/_8ssp"
+                                app:drawableTint="?attr/text_color"
+                                app:drawableTopCompat="@drawable/ic_outline_share_24" />
+
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <TextView
+                        style="@style/TextAppearance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_30sdp"
-                        android:drawablePadding="@dimen/_2sdp"
-                        android:text="My List"
-                        android:textAlignment="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:alpha="0.8"
+                        android:text="Trending Now"
                         android:textColor="?attr/text_color"
-                        android:textSize="@dimen/_8ssp"
-                        app:drawableTint="?attr/text_color"
-                        app:drawableTopCompat="@drawable/ic_round_add_24" />
+                        android:textSize="@dimen/_14ssp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/MyCustomFontTextAppearance"
-                        android:layout_width="wrap_content"
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/trendingMoviesShowRecyclerview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Info"
-                        android:textAllCaps="false"
-                        android:textColor="?attr/background_color"
-                        android:textSize="@dimen/_12ssp"
-                        app:backgroundTint="?attr/text_color"
-                        app:icon="@drawable/ic_baseline_info_24"
-                        app:iconGravity="start" />
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:shimmer_recycler_item_count="3"
+                        app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
 
                     <TextView
+                        style="@style/TextAppearance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_30sdp"
-                        android:drawablePadding="@dimen/_2sdp"
-                        android:text="Share"
-                        android:textAlignment="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:alpha="0.8"
+                        android:text="Now Playing"
                         android:textColor="?attr/text_color"
-                        android:textSize="@dimen/_8ssp"
-                        app:drawableTint="?attr/text_color"
-                        app:drawableTopCompat="@drawable/ic_outline_share_24" />
+                        android:textSize="@dimen/_14ssp" />
 
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/nowPlayingMoviesShowRecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:shimmer_recycler_item_count="3"
+                        app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
+
+
+                    <TextView
+                        style="@style/TextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:alpha="0.8"
+                        android:text="Popular"
+                        android:textColor="?attr/text_color"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/popularMoviesShowRecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:shimmer_recycler_item_count="3"
+                        app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
+
+                    <TextView
+                        style="@style/TextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:alpha="0.8"
+                        android:text="Top Rated"
+                        android:textColor="?attr/text_color"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/topMoviesShowRecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:shimmer_recycler_item_count="3"
+                        app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
 
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textNoInternet"
+                    style="@style/MyCustomFontTextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:alpha="0.5"
+                    android:text="No Internet!!"
+                    android:textSize="@dimen/_14ssp"
+                    android:visibility="gone"
+                    app:drawableTopCompat="@drawable/ic_baseline_sentiment_very_dissatisfied_24" />
 
 
-            <TextView
-                style="@style/TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:alpha="0.8"
-                android:text="Trending Now"
-                android:textColor="?attr/text_color"
-                android:textSize="@dimen/_14ssp" />
+            </FrameLayout>
 
-            <com.todkars.shimmer.ShimmerRecyclerView
-                android:id="@+id/trendingMoviesShowRecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:shimmer_recycler_item_count="3"
-                app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
+        </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                style="@style/TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:alpha="0.8"
-                android:text="Now Playing"
-                android:textColor="?attr/text_color"
-                android:textSize="@dimen/_14ssp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <com.todkars.shimmer.ShimmerRecyclerView
-                android:id="@+id/nowPlayingMoviesShowRecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:shimmer_recycler_item_count="3"
-                app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
-
-
-            <TextView
-                style="@style/TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:alpha="0.8"
-                android:text="Popular"
-                android:textColor="?attr/text_color"
-                android:textSize="@dimen/_14ssp" />
-
-            <com.todkars.shimmer.ShimmerRecyclerView
-                android:id="@+id/popularMoviesShowRecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:shimmer_recycler_item_count="3"
-                app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
-
-            <TextView
-                style="@style/TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:alpha="0.8"
-                android:text="Top Rated"
-                android:textColor="?attr/text_color"
-                android:textSize="@dimen/_14ssp" />
-
-            <com.todkars.shimmer.ShimmerRecyclerView
-                android:id="@+id/topMoviesShowRecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:shimmer_recycler_item_count="3"
-                app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/textNoInternet"
-            style="@style/MyCustomFontTextAppearance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0.5"
-            android:text="No Internet!!"
-            android:textSize="@dimen/_14ssp"
-            android:visibility="gone"
-            app:drawableTopCompat="@drawable/ic_baseline_sentiment_very_dissatisfied_24" />
-
-
-    </FrameLayout>
-
-</androidx.core.widget.NestedScrollView>
+</layout>

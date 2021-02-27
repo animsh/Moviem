@@ -11,10 +11,10 @@ import android.net.NetworkCapabilities
 class Constants {
 
     companion object {
-        const val BASE_URL = "https://api.themoviedb.org/3"
+        const val BASE_URL = "https://api.themoviedb.org/"
         const val API_KEY = "Your Api Key"
-        const val IMAGE_ORIGINAL = "https://image.tmdb.org/t/p/original"
-        const val IMAGE_W500 = "https://image.tmdb.org/t/p/w500"
+        const val IMAGE_ORIGINAL = "https://image.tmdb.org/t/p/original/"
+        const val IMAGE_W500 = "https://image.tmdb.org/t/p/w500/"
 
         fun hasInternetConnection(application: Application): Boolean {
             val connectivityManager = application.getSystemService(

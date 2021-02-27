@@ -23,7 +23,7 @@
     <color name="subtitleTextColorDark">#8FFFFFFF</color>
     <color name="searchIconTintColorDark">#5FFFFFFF</color>
     <color name="simpleIconTintColorDark">#FFFFFF</color>
-    <color name="blurImageGradientColorDark">#000000</color>
+    <color name="blurImageGradientColorDark">#9F000000</color>
 
     <color name="bottomNavigationColorLight">#FFFFFF</color>
     <color name="backgroundColorLight">#FFFFFF</color>
@@ -33,7 +33,7 @@
     <color name="subtitleTextColorLight">#757575</color>
     <color name="searchIconTintColorLight">#757575</color>
     <color name="simpleIconTintColorLight">#000000</color>
-    <color name="blurImageGradientColorLight">#FFFFFF</color>
+    <color name="blurImageGradientColorLight">#9FFFFFFF</color>
     <color name="redColor">#EE1520</color>
 
 </resources>
