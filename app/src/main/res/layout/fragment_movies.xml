@@ -109,24 +109,36 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:gravity="center"
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="@dimen/_5sdp"
-                                    android:layout_weight="1"
-                                    android:loadStatus="@{LatestMovie.status}"
-                                    android:textAlignment="viewEnd"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:background="@drawable/background_adult_lable"
+                                    android:padding="@dimen/_2sdp"
+                                    android:setAdultStatus="@{LatestMovie.adult}"
+                                    android:text="18+"
+                                    android:textColor="?attr/sub_text_color"
+                                    android:textSize="@dimen/_10ssp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:loadLanguage="@{LatestMovie.originalLanguage}"
                                     android:textColor="?attr/text_color" />
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_5sdp"
-                                    android:layout_weight="1"
+                                    android:loadStatus="@{LatestMovie.status}"
+                                    android:textColor="?attr/text_color" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:loadRuntime="@{LatestMovie.runtime}"
-                                    android:textAlignment="viewStart"
                                     android:textColor="?attr/text_color" />
                             </LinearLayout>
 

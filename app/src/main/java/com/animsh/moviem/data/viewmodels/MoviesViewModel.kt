@@ -109,7 +109,7 @@ class MoviesViewModel @ViewModelInject constructor(
         topMoviesResponse.value = NetworkResult.Loading()
         if (hasInternetConnection(getApplication())) {
             try {
-                val response = repository.remote.getTrendingMovies(apiKey, page)
+                val response = repository.remote.getTopMovies(apiKey, page)
                 topMoviesResponse.value = handleCommonResponse(response)
             } catch (e: Exception) {
                 topMoviesResponse.value = NetworkResult.Error(message = "Movies Not Found!!")

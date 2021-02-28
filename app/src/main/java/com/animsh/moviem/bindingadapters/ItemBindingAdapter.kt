@@ -1,11 +1,10 @@
 package com.animsh.moviem.bindingadapters
 
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
-import android.text.SpannableStringBuilder
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
-import androidx.core.text.bold
 import androidx.databinding.BindingAdapter
 import com.animsh.moviem.R
 import com.animsh.moviem.util.Constants.Companion.IMAGE_W500
@@ -15,6 +14,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import java.text.MessageFormat
+import java.util.*
 import kotlin.math.abs
 
 
@@ -60,21 +61,43 @@ class ItemBindingAdapter {
 
         @BindingAdapter("android:loadRuntime")
         @JvmStatic
-        fun loadMovieRuntime(textView: TextView, runtime: Int) {
+        fun loadRuntime(textView: TextView, runtime: Int) {
             val hours = runtime / 60 //since both are ints, you get an int
             val minutes = abs(runtime) % 60
-            textView.text = SpannableStringBuilder()
-                .bold { append("Runtime: ") }
-                .append("${hours}h ${minutes}m")
-//            textView.text = MessageFormat.format("| Runtime: {0}h {1}m", hours, minutes)
+            textView.text = MessageFormat.format("● {0}h {1}m", hours, minutes)
         }
+
+        @BindingAdapter("android:loadLanguage")
+        @JvmStatic
+        fun loadLanguage(textView: TextView, language: String?) {
+            textView.text = "● $language ".toUpperCase(Locale.getDefault())
+        }
+
 
         @BindingAdapter("android:loadStatus")
         @JvmStatic
         fun loadStatus(textView: TextView, status: String?) {
-            textView.text = SpannableStringBuilder()
-                .bold { append("Status: ") }
-                .append("$status")
+            textView.text = "● $status "
+        }
+
+        @BindingAdapter("android:loadType")
+        @JvmStatic
+        fun loadType(textView: TextView, type: String?) {
+            textView.text = "$type "
+        }
+
+        @BindingAdapter("android:loadSeasons")
+        @JvmStatic
+        fun loadSeasons(textView: TextView, seasons: Int) {
+            textView.text = "● $seasons Seasons"
+        }
+
+        @BindingAdapter("android:setAdultStatus")
+        @JvmStatic
+        fun setAdultStatus(textView: TextView, isAdult: Boolean) {
+            if (!isAdult) {
+                textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }
         }
 
     }

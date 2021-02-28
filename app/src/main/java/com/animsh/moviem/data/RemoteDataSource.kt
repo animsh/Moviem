@@ -4,6 +4,8 @@ import com.animsh.moviem.data.network.TMDBApi
 import com.animsh.moviem.models.movie.CommonMovieResponse
 import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
+import com.animsh.moviem.models.tv.TV
+import com.animsh.moviem.models.tv.TvResponse
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -32,5 +34,29 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getNowPlayingMovies(apiKey: String, page: Int): Response<UniqueMovieResponse> {
         return tmdbApi.getNowPlayingMovies(apiKey, page)
+    }
+
+    suspend fun getLatestTV(apiKey: String): Response<TV> {
+        return tmdbApi.getLatestTVShow(apiKey)
+    }
+
+    suspend fun getTvAiringToday(apiKey: String, page: Int): Response<TvResponse> {
+        return tmdbApi.getTVAiringToday(apiKey, page)
+    }
+
+    suspend fun getOnAirTv(apiKey: String, page: Int): Response<TvResponse> {
+        return tmdbApi.getTVOnAirToday(apiKey, page)
+    }
+
+    suspend fun getPopularTv(apiKey: String, page: Int): Response<TvResponse> {
+        return tmdbApi.getPopularTVShow(apiKey, page)
+    }
+
+    suspend fun getTopTv(apiKey: String, page: Int): Response<TvResponse> {
+        return tmdbApi.getTopRatedTVShow(apiKey, page)
+    }
+
+    suspend fun getTrendingTv(apiKey: String, page: Int): Response<TvResponse> {
+        return tmdbApi.getTrendingTVShows(apiKey, page)
     }
 }
