@@ -2,36 +2,32 @@ package com.animsh.moviem.ui.home
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.animsh.moviem.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.animsh.moviem.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar.setBackgroundColor(Color.TRANSPARENT)
-
-        tabLayout.setupWithViewPager(viewPager)
-        val viewPagerAdapter: ViewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(MoviesFragment(), "Movies")
-        viewPagerAdapter.addFragment(TvShowsFragment(), "TV Shows")
-        viewPagerAdapter.addFragment(MyListFragment(), "My List")
-        viewPager.adapter = viewPagerAdapter
-        viewPager.offscreenPageLimit = 3
+        val binding = FragmentHomeBinding.bind(view)
+        binding.apply {
+            toolbar.setBackgroundColor(Color.TRANSPARENT)
+            tabLayout.setupWithViewPager(viewPager)
+            val viewPagerAdapter: ViewPagerAdapter = ViewPagerAdapter(childFragmentManager)
+            viewPagerAdapter.apply {
+                addFragment(MoviesFragment(), "Movies")
+                addFragment(TvShowsFragment(), "TV Shows")
+                addFragment(MyListFragment(), "My List")
+            }
+            viewPager.apply {
+                adapter = viewPagerAdapter
+                offscreenPageLimit = 3
+            }
+        }
 
     }
 

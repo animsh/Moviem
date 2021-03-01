@@ -4,15 +4,18 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/selector_home"
+        android:orderInCategory="0"
         android:title="Home" />
 
     <item
         android:id="@+id/comingSoonFragment"
         android:icon="@drawable/selector_coming_soon"
+        android:orderInCategory="1"
         android:title="Coming Soon" />
 
     <item
         android:id="@+id/moreFragment"
         android:icon="@drawable/selector_more"
+        android:orderInCategory="2"
         android:title="More" />
 </menu>
