@@ -44,11 +44,14 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.apply {
                 setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
             }
-            fragmentManager.beginTransaction().add(R.id.main_container, moreFragment, "2")
-                .hide(moreFragment).commit()
-            fragmentManager.beginTransaction().add(R.id.main_container, comingSoonFragment, "1")
-                .hide(comingSoonFragment).commit()
-            fragmentManager.beginTransaction().add(R.id.main_container, homeFragment, "0").commit()
+            if (fragmentManager.findFragmentByTag("0") == null) {
+                fragmentManager.beginTransaction().add(R.id.main_container, moreFragment, "2")
+                    .hide(moreFragment).commit()
+                fragmentManager.beginTransaction().add(R.id.main_container, comingSoonFragment, "1")
+                    .hide(comingSoonFragment).commit()
+                fragmentManager.beginTransaction().add(R.id.main_container, homeFragment, "0")
+                    .commit()
+            }
         }
     }
 
@@ -83,7 +86,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (backStack.size > 1) {
-            Log.d("TAGTATAG", "onBackPressed: ")
             backStack.removeAt(backStack.lastIndex)
             fragmentManager.beginTransaction().hide(active).show(backStack[backStack.lastIndex])
                 .commit()
