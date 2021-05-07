@@ -2,7 +2,6 @@ package com.animsh.moviem.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -29,10 +28,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(null)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.apply {
             supportActionBar?.hide()
             window.apply {
@@ -40,18 +38,22 @@ class MainActivity : AppCompatActivity() {
                 addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                 statusBarColor = Color.TRANSPARENT
             }
-            backStack.add(homeFragment)
-            bottomNavigationView.apply {
-                setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-            }
-            if (fragmentManager.findFragmentByTag("0") == null) {
-                fragmentManager.beginTransaction().add(R.id.main_container, moreFragment, "2")
-                    .hide(moreFragment).commit()
-                fragmentManager.beginTransaction().add(R.id.main_container, comingSoonFragment, "1")
-                    .hide(comingSoonFragment).commit()
-                fragmentManager.beginTransaction().add(R.id.main_container, homeFragment, "0")
-                    .commit()
-            }
+            setupBottomNav()
+        }
+    }
+
+    private fun setupBottomNav() {
+        backStack.add(homeFragment)
+        binding.bottomNavigationView.apply {
+            setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        }
+        if (fragmentManager.findFragmentByTag("0") == null) {
+            fragmentManager.beginTransaction().add(R.id.main_container, moreFragment, "2")
+                .hide(moreFragment).commit()
+            fragmentManager.beginTransaction().add(R.id.main_container, comingSoonFragment, "1")
+                .hide(comingSoonFragment).commit()
+            fragmentManager.beginTransaction().add(R.id.main_container, homeFragment, "0")
+                .commit()
         }
     }
 
@@ -83,6 +85,14 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        binding.bottomNavigationView.apply {
+            setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        }
+        binding.bottomNavigationView.menu.getItem(0).isChecked = true
+    }
 
     override fun onBackPressed() {
         if (backStack.size > 1) {
