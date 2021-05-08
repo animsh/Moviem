@@ -28,6 +28,8 @@
         <item name="fontFamily">@font/netflix_sans</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="bottom_sheet_color">#F8F8F8</item>
+        <item name="summary_color">#0B0B0B</item>
     </style>
 
     <style name="MyCustomFontTextAppearance" parent="TextAppearance.AppCompat.Body1">

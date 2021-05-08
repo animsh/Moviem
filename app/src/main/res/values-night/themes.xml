@@ -27,5 +27,7 @@
         <item name="fontFamily">@font/netflix_sans</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="bottom_sheet_color">#2B2B2B</item>
+        <item name="summary_color">#FBFBFB</item>
     </style>
 </resources>

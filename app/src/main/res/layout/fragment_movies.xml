@@ -19,7 +19,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.home.MoviesFragment">
+            tools:context=".ui.home.movies.MoviesFragment">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/_5sdp"
                                     android:background="@drawable/background_adult_lable"
-                                    android:padding="@dimen/_2sdp"
+                                    android:padding="@dimen/_3sdp"
                                     android:setAdultStatus="@{LatestMovie.adult}"
                                     android:text="18+"
                                     android:textColor="?attr/sub_text_color"
@@ -165,7 +165,7 @@
                                 android:textColor="?attr/text_color"
                                 android:textSize="@dimen/_8ssp"
                                 app:drawableTint="?attr/text_color"
-                                app:drawableTopCompat="@drawable/ic_round_add_24" />
+                                app:drawableTopCompat="@drawable/ic_add" />
 
                             <com.google.android.material.button.MaterialButton
                                 style="@style/MyCustomFontTextAppearance"
@@ -189,7 +189,7 @@
                                 android:textColor="?attr/text_color"
                                 android:textSize="@dimen/_8ssp"
                                 app:drawableTint="?attr/text_color"
-                                app:drawableTopCompat="@drawable/ic_outline_share_24" />
+                                app:drawableTopCompat="@drawable/ic_share" />
 
 
                         </LinearLayout>

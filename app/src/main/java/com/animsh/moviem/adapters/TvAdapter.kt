@@ -2,17 +2,21 @@ package com.animsh.moviem.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.animsh.moviem.databinding.LayoutTvItemContainerBinding
 import com.animsh.moviem.models.tv.Result
 import com.animsh.moviem.models.tv.TvResponse
+import com.animsh.moviem.ui.home.tvs.TvBottomSheet
 import com.animsh.moviem.util.TvDiffUtil
 
 /**
  * Created by animsh on 2/27/2021.
  */
-class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
+class TvAdapter(
+    private val fragmentManager: FragmentManager
+) : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
 
     private var tvsList = emptyList<Result>()
 
@@ -35,13 +39,21 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TvAdapter.TvViewHolder {
+    ): TvViewHolder {
         return TvViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: TvAdapter.TvViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
         val currentTv = tvsList[position]
         holder.bindData(currentTv)
+        holder.itemView.setOnClickListener {
+            val openBottomSheet: TvBottomSheet =
+                TvBottomSheet(currentTv).newInstance()
+            openBottomSheet.show(
+                fragmentManager,
+                TvBottomSheet.TAG
+            )
+        }
     }
 
     override fun getItemCount(): Int {

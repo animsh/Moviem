@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui.home
+package com.animsh.moviem.ui.home.movies
 
 import android.os.Bundle
 import android.util.Log
@@ -23,10 +23,10 @@ class MoviesFragment : Fragment() {
 
     private lateinit var mView: View
     private lateinit var fragmentMoviesBinding: FragmentMoviesBinding
-    private val trendingMoviesAdapter by lazy { MovieAdapter() }
-    private val popularMoviesAdapter by lazy { MovieAdapter() }
-    private val topMoviesAdapter by lazy { MovieAdapter() }
-    private val nowPlayingMoviesAdapter by lazy { MovieAdapter() }
+    private val trendingMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
+    private val popularMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
+    private val topMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
+    private val nowPlayingMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
     private lateinit var moviesViewModel: MoviesViewModel
 
     override fun onCreateView(
@@ -57,7 +57,12 @@ class MoviesFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        moviesViewModel.getLatestMovie(API_KEY)
+        moviesViewModel.getLatestMovie(API_KEY).invokeOnCompletion {
+            Log.d(
+                "TAGTAGTAG",
+                "requestApiData: " + moviesViewModel.latestMovieResponse.value?.data?.id
+            )
+        }
         moviesViewModel.latestMovieResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {

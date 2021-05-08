@@ -20,7 +20,7 @@
     <color name="backgroundLayoutColorDark">#000000</color>
     <color name="searchBackgroundDark">#323232</color>
     <color name="titleTextColorDark">#FFFFFF</color>
-    <color name="subtitleTextColorDark">#8FFFFFFF</color>
+    <color name="subtitleTextColorDark">#929292</color>
     <color name="searchIconTintColorDark">#5FFFFFFF</color>
     <color name="simpleIconTintColorDark">#FFFFFF</color>
     <color name="blurImageGradientColorDark">#9F000000</color>

@@ -11,9 +11,11 @@
     </data>
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_125sdp"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:adjustViewBounds="true"
         android:loadImageFromURL="@{Movie.posterPath}"
+        android:scaleType="fitXY"
         app:riv_corner_radius="@dimen/_5sdp" />
 </layout>

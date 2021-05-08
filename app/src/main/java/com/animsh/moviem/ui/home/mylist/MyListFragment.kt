@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui.home
+package com.animsh.moviem.ui.home.mylist
 
 import android.os.Bundle
 import android.view.LayoutInflater

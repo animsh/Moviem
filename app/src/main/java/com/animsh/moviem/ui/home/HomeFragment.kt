@@ -8,6 +8,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.animsh.moviem.R
 import com.animsh.moviem.databinding.FragmentHomeBinding
+import com.animsh.moviem.ui.home.movies.MoviesFragment
+import com.animsh.moviem.ui.home.mylist.MyListFragment
+import com.animsh.moviem.ui.home.tvs.TvShowsFragment
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 

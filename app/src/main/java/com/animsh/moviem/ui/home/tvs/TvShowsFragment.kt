@@ -1,4 +1,4 @@
-package com.animsh.moviem.ui.home
+package com.animsh.moviem.ui.home.tvs
 
 import android.os.Bundle
 import android.util.Log
@@ -19,11 +19,11 @@ class TvShowsFragment : Fragment() {
 
     private lateinit var mView: View
     private lateinit var fragmentTvShowsBinding: FragmentTvShowsBinding
-    private val trendingTvAdapter by lazy { TvAdapter() }
-    private val onAirTvAdapter by lazy { TvAdapter() }
-    private val airingTodayTvAdapter by lazy { TvAdapter() }
-    private val popularTvAdapter by lazy { TvAdapter() }
-    private val topTvAdapter by lazy { TvAdapter() }
+    private val trendingTvAdapter by lazy { TvAdapter(childFragmentManager) }
+    private val onAirTvAdapter by lazy { TvAdapter(childFragmentManager) }
+    private val airingTodayTvAdapter by lazy { TvAdapter(childFragmentManager) }
+    private val popularTvAdapter by lazy { TvAdapter(childFragmentManager) }
+    private val topTvAdapter by lazy { TvAdapter(childFragmentManager) }
     private lateinit var tvViewModel: TvViewModel
 
     override fun onCreateView(
@@ -55,7 +55,12 @@ class TvShowsFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        tvViewModel.getLatestTv(API_KEY)
+        tvViewModel.getLatestTv(API_KEY).invokeOnCompletion {
+            Log.d(
+                "TAGTAGTAG",
+                "requestApiData: " + tvViewModel.latestTvResponse.value?.data?.id
+            )
+        }
         tvViewModel.latestTvResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {

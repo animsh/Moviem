@@ -19,7 +19,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.home.TvShowsFragment">
+            tools:context=".ui.home.tvs.TvShowsFragment">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                                 android:textColor="?attr/text_color"
                                 android:textSize="@dimen/_8ssp"
                                 app:drawableTint="?attr/text_color"
-                                app:drawableTopCompat="@drawable/ic_round_add_24" />
+                                app:drawableTopCompat="@drawable/ic_add" />
 
                             <com.google.android.material.button.MaterialButton
                                 style="@style/MyCustomFontTextAppearance"
@@ -177,7 +177,7 @@
                                 android:textColor="?attr/text_color"
                                 android:textSize="@dimen/_8ssp"
                                 app:drawableTint="?attr/text_color"
-                                app:drawableTopCompat="@drawable/ic_outline_share_24" />
+                                app:drawableTopCompat="@drawable/ic_share" />
 
 
                         </LinearLayout>
