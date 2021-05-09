@@ -6,11 +6,13 @@
 
         <variable
             name="data"
-            type="com.animsh.moviem.models.tv.Result" />
+            type="com.animsh.moviem.models.tv.TV" />
+
+        <import type="com.animsh.moviem.R" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_bottom_sheet_movies"
+        android:id="@+id/layout_bottom_sheet_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_sheet">
@@ -49,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:letterSpacing="0.05"
-                    android:lineSpacingMultiplier="1.1"
+                    android:lineSpacingMultiplier="1"
                     android:text="@{data.name}"
                     android:textColor="?attr/text_color"
                     android:textSize="@dimen/_14ssp"
@@ -66,19 +68,30 @@
                         android:id="@+id/year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{data.firstAirDate}"
+                        android:text="@{data.firstAirDate.toString().substring(0,4) + `-` + data.lastAirDate.toString().substring(0,4)}"
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
 
                     <TextView
-                        android:id="@+id/language"
+                        android:id="@+id/tRuntime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:gravity="center"
-                        android:text="@{data.originalLanguage.toString().toUpperCase()}"
+                        android:loadRuntime="@{data.episodeRunTime.get(0)}"
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:id="@+id/seasons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(data.numberOfSeasons) + ` Seasons`}"
+                        android:textColor="?attr/sub_text_color"
+                        android:textSize="@dimen/_10ssp" />
+
                 </LinearLayout>
 
                 <TextView
@@ -89,7 +102,7 @@
                     android:ellipsize="end"
                     android:letterSpacing="0.05"
                     android:lineSpacingMultiplier="1"
-                    android:maxLines="5"
+                    android:maxLines="4"
                     android:text="@{data.overview}"
                     android:textColor="?attr/summary_color"
                     android:textSize="@dimen/_10ssp" />
@@ -146,13 +159,25 @@
             android:layout_margin="@dimen/_12sdp"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center_vertical"
-            android:text="Episoded &amp; Info"
+            android:text="Episodes &amp; Info"
             android:textColor="?attr/summary_color"
             android:textSize="@dimen/_12ssp"
             app:drawableEndCompat="@drawable/ic_forward"
             app:drawableStartCompat="@drawable/ic_outline_info_24"
             app:drawableTint="?attr/summary_color"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:alpha="0.2"
+            android:background="?sub_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttons" />

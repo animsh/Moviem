@@ -7,6 +7,7 @@ import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -17,6 +18,12 @@ interface TMDBApi {
 
     @GET("3/movie/latest")
     suspend fun getLatestMovie(
+        @Query("api_key") apiKey: String
+    ): Response<Movie>
+
+    @GET("3/movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<Movie>
 
@@ -43,6 +50,12 @@ interface TMDBApi {
 
     @GET("3/tv/latest")
     suspend fun getLatestTVShow(@Query("api_key") apiKey: String): Response<TV>
+
+    @GET("3/tv/{tv_id}")
+    suspend fun getTVShowDetails(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<TV>
 
     @GET("3/tv/airing_today")
     suspend fun getTVAiringToday(

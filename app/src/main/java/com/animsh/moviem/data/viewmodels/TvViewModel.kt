@@ -23,6 +23,8 @@ class TvViewModel @ViewModelInject constructor(
 
     var latestTvResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
 
+    var tvDetailsResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
+
     var tvOnAirResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
 
     var tvAiringTodayResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
@@ -35,6 +37,10 @@ class TvViewModel @ViewModelInject constructor(
 
     fun getLatestTv(apiKey: String) = viewModelScope.launch {
         getLatestTvSafeCAll(apiKey)
+    }
+
+    fun getTvDetails(tvId: Int, apiKey: String) = viewModelScope.launch {
+        getTvDetailsSafeCAll(tvId, apiKey)
     }
 
     fun getOnAirTv(apiKey: String, page: Int) = viewModelScope.launch {
@@ -160,6 +166,20 @@ class TvViewModel @ViewModelInject constructor(
             }
         } else {
             latestTvResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private suspend fun getTvDetailsSafeCAll(tvId: Int, apiKey: String) {
+        tvDetailsResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getTVDetails(tvId, apiKey)
+                tvDetailsResponse.value = handleResponse(response)
+            } catch (e: Exception) {
+                tvDetailsResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+            }
+        } else {
+            tvDetailsResponse.value = NetworkResult.Error(message = "No Internet Connection")
         }
     }
 

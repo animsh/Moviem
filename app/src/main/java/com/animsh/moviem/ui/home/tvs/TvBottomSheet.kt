@@ -1,11 +1,16 @@
 package com.animsh.moviem.ui.home.tvs
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.LayoutBottomSheetTvBinding
 import com.animsh.moviem.models.tv.Result
+import com.animsh.moviem.util.Constants
+import com.animsh.moviem.util.NetworkResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -21,6 +26,7 @@ class TvBottomSheet(
 
     private var _binding: LayoutBottomSheetTvBinding? = null
     private val binding get() = _binding!!
+    private lateinit var tvViewModel: TvViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +39,9 @@ class TvBottomSheet(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tvViewModel = ViewModelProvider(requireActivity()).get(TvViewModel::class.java)
         binding.apply {
-            data = result
+            requestApiData(result.id)
         }
     }
 
@@ -45,6 +52,31 @@ class TvBottomSheet(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun requestApiData(tvId: Int) {
+        tvViewModel.getTvDetails(tvId, Constants.API_KEY).invokeOnCompletion {
+            Log.d(
+                "TAGTAGTAG",
+                "requestApiData: " + tvViewModel.tvDetailsResponse.value?.data?.id
+            )
+        }
+        tvViewModel.tvDetailsResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    response.data?.let {
+                        binding.data = it
+                        Log.d("LOGDATA", "requestApiData: $it")
+                    }
+                }
+                is NetworkResult.Error -> {
+                    Log.d("LOGDATA", "requestApiData: " + response.message.toString())
+                }
+                is NetworkResult.Loading -> {
+                    Log.d("LOGDATA", "requestApiData: 3")
+                }
+            }
+        })
     }
 
 }

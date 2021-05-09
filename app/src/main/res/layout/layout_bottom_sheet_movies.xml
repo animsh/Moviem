@@ -6,11 +6,11 @@
 
         <variable
             name="data"
-            type="com.animsh.moviem.models.movie.Result" />
+            type="com.animsh.moviem.models.movie.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_bottom_sheet_tv"
+        android:id="@+id/layout_bottom_sheet_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_bottom_sheet">
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:letterSpacing="0.05"
-                    android:lineSpacingMultiplier="1.1"
+                    android:lineSpacingMultiplier="1"
                     android:text="@{data.title}"
                     android:textColor="?attr/text_color"
                     android:textSize="@dimen/_14ssp"
@@ -66,7 +66,7 @@
                         android:id="@+id/year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{data.releaseDate}"
+                        android:text="@{data.releaseDate.toString().substring(0,4)}"
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
 
@@ -82,6 +82,15 @@
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
 
+                    <TextView
+                        android:id="@+id/bRuntime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:loadRuntime="@{data.runtime}"
+                        android:textColor="?attr/sub_text_color"
+                        android:textSize="@dimen/_10ssp" />
+
                 </LinearLayout>
 
                 <TextView
@@ -92,7 +101,7 @@
                     android:ellipsize="end"
                     android:letterSpacing="0.05"
                     android:lineSpacingMultiplier="1"
-                    android:maxLines="5"
+                    android:maxLines="4"
                     android:text="@{data.overview}"
                     android:textColor="?attr/summary_color"
                     android:textSize="@dimen/_10ssp" />
@@ -156,6 +165,18 @@
             app:drawableStartCompat="@drawable/ic_outline_info_24"
             app:drawableTint="?attr/summary_color"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:alpha="0.2"
+            android:background="?sub_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttons" />

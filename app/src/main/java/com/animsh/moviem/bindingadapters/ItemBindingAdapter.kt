@@ -64,7 +64,13 @@ class ItemBindingAdapter {
         fun loadRuntime(textView: TextView, runtime: Int) {
             val hours = runtime / 60 //since both are ints, you get an int
             val minutes = abs(runtime) % 60
-            textView.text = MessageFormat.format("● {0}h {1}m", hours, minutes)
+            if (textView.id == R.id.bRuntime) {
+                textView.text = MessageFormat.format("{0}h {1}m", hours, minutes)
+            } else if (textView.id == R.id.tRuntime) {
+                textView.text = MessageFormat.format("{0}h {1}m/ep", hours, minutes)
+            } else {
+                textView.text = MessageFormat.format("● {0}h {1}m", hours, minutes)
+            }
         }
 
         @BindingAdapter("android:loadLanguage")
