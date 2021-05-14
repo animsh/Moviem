@@ -2,6 +2,7 @@ package com.animsh.moviem.data
 
 import com.animsh.moviem.data.network.TMDBApi
 import com.animsh.moviem.models.movie.CommonMovieResponse
+import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
 import com.animsh.moviem.models.tv.TV
@@ -22,6 +23,29 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getMovieDetails(movieId: Int, apiKey: String): Response<Movie> {
         return tmdbApi.getMovieDetails(movieId, apiKey)
+    }
+
+    suspend fun getSimilarMoviesDetails(
+        movieId: Int,
+        apiKey: String,
+        page: Int
+    ): Response<CommonMovieResponse> {
+        return tmdbApi.getSimilarMovie(movieId, apiKey, page)
+    }
+
+    suspend fun getRecommendationMoviesDetails(
+        movieId: Int,
+        apiKey: String,
+        page: Int
+    ): Response<CommonMovieResponse> {
+        return tmdbApi.getRecommendationsMovie(movieId, apiKey, page)
+    }
+
+    suspend fun getMovieCreditsDetails(
+        movieId: Int,
+        apiKey: String
+    ): Response<CreditsResponse> {
+        return tmdbApi.getCreditsMovie(movieId, apiKey)
     }
 
     suspend fun getTrendingMovies(apiKey: String, page: Int): Response<CommonMovieResponse> {

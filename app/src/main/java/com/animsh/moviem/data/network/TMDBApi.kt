@@ -1,6 +1,7 @@
 package com.animsh.moviem.data.network
 
 import com.animsh.moviem.models.movie.CommonMovieResponse
+import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
 import com.animsh.moviem.models.tv.TV
@@ -26,6 +27,26 @@ interface TMDBApi {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<Movie>
+
+    @GET("3/movie/{movie_id}/similar")
+    suspend fun getSimilarMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Response<CommonMovieResponse>
+
+    @GET("3/movie/{movie_id}/recommendations")
+    suspend fun getRecommendationsMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Response<CommonMovieResponse>
+
+    @GET("3/movie/{movie_id}/credits")
+    suspend fun getCreditsMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<CreditsResponse>
 
     @GET("3/trending/movie/day")
     suspend fun getTrendingMovie(

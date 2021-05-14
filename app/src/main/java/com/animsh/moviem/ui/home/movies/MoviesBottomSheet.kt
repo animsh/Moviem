@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.databinding.LayoutBottomSheetMoviesBinding
 import com.animsh.moviem.models.movie.Result
+import com.animsh.moviem.ui.home.movies.details.MovieDetailsActivity
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

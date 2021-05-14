@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.animsh.moviem.data.repositories.Repository
 import com.animsh.moviem.models.movie.CommonMovieResponse
+import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
 import com.animsh.moviem.util.Constants.Companion.hasInternetConnection
@@ -26,6 +27,15 @@ class MoviesViewModel @ViewModelInject constructor(
 
     var movieDetailsResponse: MutableLiveData<NetworkResult<Movie>> = MutableLiveData()
 
+    var similarMoviesResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
+        MutableLiveData()
+
+    var recommendationMoviesResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
+        MutableLiveData()
+
+    var movieCreditsResponse: MutableLiveData<NetworkResult<CreditsResponse>> =
+        MutableLiveData()
+
     var trendingMovieResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
         MutableLiveData()
 
@@ -44,6 +54,18 @@ class MoviesViewModel @ViewModelInject constructor(
 
     fun getMovieDetails(movieId: Int, apiKey: String) = viewModelScope.launch {
         getMovieDetailsSafeCall(movieId, apiKey)
+    }
+
+    fun getSimilarMovies(movieId: Int, apiKey: String, page: Int) = viewModelScope.launch {
+        getSimilarMoviesSafeCall(movieId, apiKey, page)
+    }
+
+    fun getRecommendationsMovies(movieId: Int, apiKey: String, page: Int) = viewModelScope.launch {
+        getRecommendationMoviesSafeCall(movieId, apiKey, page)
+    }
+
+    fun getMovieCredits(movieId: Int, apiKey: String) = viewModelScope.launch {
+        getMovieCreditsSafeCall(movieId, apiKey)
     }
 
     fun getTrendingMovies(apiKey: String, page: Int) = viewModelScope.launch {
@@ -166,6 +188,73 @@ class MoviesViewModel @ViewModelInject constructor(
             trendingMovieResponse.value = NetworkResult.Error(message = "No Internet Connection")
         }
     }
+
+    private suspend fun getSimilarMoviesSafeCall(movieId: Int, apiKey: String, page: Int) {
+        similarMoviesResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getSimilarMoviesDetails(movieId, apiKey, page)
+                similarMoviesResponse.value = handleCommonResponse(response)
+            } catch (e: Exception) {
+                similarMoviesResponse.value = NetworkResult.Error(message = "Movies Not Found!!")
+            }
+        } else {
+            similarMoviesResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private suspend fun getRecommendationMoviesSafeCall(movieId: Int, apiKey: String, page: Int) {
+        recommendationMoviesResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection(getApplication())) {
+            try {
+                val response =
+                    repository.remote.getRecommendationMoviesDetails(movieId, apiKey, page)
+                recommendationMoviesResponse.value = handleCommonResponse(response)
+            } catch (e: Exception) {
+                recommendationMoviesResponse.value =
+                    NetworkResult.Error(message = "Movies Not Found!!")
+            }
+        } else {
+            recommendationMoviesResponse.value =
+                NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private suspend fun getMovieCreditsSafeCall(movieId: Int, apiKey: String) {
+        movieCreditsResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection(getApplication())) {
+            try {
+                val response =
+                    repository.remote.getMovieCreditsDetails(movieId, apiKey)
+                movieCreditsResponse.value = handleCreditsResponse(response)
+            } catch (e: Exception) {
+                movieCreditsResponse.value =
+                    NetworkResult.Error(message = "credit Not Found!!")
+            }
+        } else {
+            movieCreditsResponse.value =
+                NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private fun handleCreditsResponse(response: Response<CreditsResponse>): NetworkResult<CreditsResponse>? {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                NetworkResult.Error(message = "Timeout!!!")
+            }
+            response.code() == 402 -> {
+                NetworkResult.Error(message = "Quota Exceeded!!")
+            }
+            response.isSuccessful -> {
+                val credits = response.body()
+                NetworkResult.Success(credits!!)
+            }
+            else -> {
+                NetworkResult.Error(message = response.message())
+            }
+        }
+    }
+
 
     private fun handleCommonResponse(response: Response<CommonMovieResponse>): NetworkResult<CommonMovieResponse>? {
         when {
