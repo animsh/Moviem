@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.home.movies
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,6 +43,11 @@ class MoviesBottomSheet(
         moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         binding.apply {
             requestApiData(result.id)
+            infoBtn.setOnClickListener {
+                val intent: Intent = Intent(context, MovieDetailsActivity::class.java)
+                intent.putExtra("movie", binding.data)
+                context?.startActivity(intent)
+            }
         }
     }
 

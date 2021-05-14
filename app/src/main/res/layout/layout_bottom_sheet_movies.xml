@@ -153,11 +153,12 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/infoBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_12sdp"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center_vertical"
+            android:padding="@dimen/_12sdp"
             android:text="Info"
             android:textColor="?attr/summary_color"
             android:textSize="@dimen/_12ssp"
