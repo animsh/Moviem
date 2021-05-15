@@ -1,69 +1,73 @@
 package com.animsh.moviem.models.tv
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
+@Parcelize
 data class TV(
     @SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @SerializedName("created_by")
-    val createdBy: List<Any>,
+    val createdBy: @RawValue List<Any>,
     @SerializedName("episode_run_time")
-    val episodeRunTime: List<Int>,
+    val episodeRunTime: @RawValue List<Int>,
     @SerializedName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @SerializedName("genres")
-    val genres: List<Genre>,
+    val genres: @RawValue List<Genre>,
     @SerializedName("homepage")
-    val homepage: String,
+    val homepage: String?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("in_production")
-    val inProduction: Boolean,
+    val inProduction: Boolean?,
     @SerializedName("languages")
-    val languages: List<String>,
+    val languages: @RawValue List<String>,
     @SerializedName("last_air_date")
-    val lastAirDate: String,
+    val lastAirDate: String?,
     @SerializedName("last_episode_to_air")
-    val lastEpisodeToAir: LastEpisodeToAir,
+    val lastEpisodeToAir: LastEpisodeToAir?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("networks")
-    val networks: List<Network>,
+    val networks: @RawValue List<Network>,
     @SerializedName("next_episode_to_air")
-    val nextEpisodeToAir: Any,
+    val nextEpisodeToAir: LastEpisodeToAir?,
     @SerializedName("number_of_episodes")
-    val numberOfEpisodes: Int,
+    val numberOfEpisodes: Int?,
     @SerializedName("number_of_seasons")
-    val numberOfSeasons: Int,
+    val numberOfSeasons: Int?,
     @SerializedName("origin_country")
-    val originCountry: List<String>,
+    val originCountry: @RawValue List<String>,
     @SerializedName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
     @SerializedName("original_name")
-    val originalName: String,
+    val originalName: String?,
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
     @SerializedName("popularity")
-    val popularity: Double,
+    val popularity: Double?,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("production_companies")
-    val productionCompanies: List<ProductionCompany>,
+    val productionCompanies: @RawValue List<ProductionCompany>,
     @SerializedName("production_countries")
-    val productionCountries: List<ProductionCountry>,
+    val productionCountries: @RawValue List<ProductionCountry>,
     @SerializedName("seasons")
-    val seasons: List<Season>,
+    val seasons: @RawValue List<Season>,
     @SerializedName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>,
+    val spokenLanguages: @RawValue List<SpokenLanguage>,
     @SerializedName("status")
-    val status: String,
+    val status: String?,
     @SerializedName("tagline")
-    val tagline: String,
+    val tagline: String?,
     @SerializedName("type")
-    val type: String,
+    val type: String?,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int
-)
+    val voteCount: Int?
+) : Parcelable

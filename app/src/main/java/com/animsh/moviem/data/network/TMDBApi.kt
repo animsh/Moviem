@@ -103,4 +103,24 @@ interface TMDBApi {
         @Query("api_key") apiKey: String, @Query("page") page: Int
     ): Response<TvResponse>
 
+    @GET("3/tv/{tv_id}/similar")
+    suspend fun getSimilarTV(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Response<TvResponse>
+
+    @GET("3/tv/{tv_id}/recommendations")
+    suspend fun getRecommendationsTV(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Response<TvResponse>
+
+    @GET("3/tv/{tv_id}/credits")
+    suspend fun getCreditsTV(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String
+    ): Response<CreditsResponse>
+
 }

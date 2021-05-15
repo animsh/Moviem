@@ -1,4 +1,4 @@
-package com.animsh.moviem.models.tv
+package com.animsh.moviem.models.movie
 
 
 import android.os.Parcelable
@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Network(
+data class BelongsToCollection(
+    @SerializedName("backdrop_path")
+    val backdropPath: String?,
     @SerializedName("id")
     val id: Int?,
-    @SerializedName("logo_path")
-    val logoPath: String?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("origin_country")
-    val originCountry: String?
+    @SerializedName("poster_path")
+    val posterPath: String?
 ) : Parcelable

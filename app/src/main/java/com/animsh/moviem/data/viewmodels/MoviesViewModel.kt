@@ -91,7 +91,8 @@ class MoviesViewModel @ViewModelInject constructor(
                 val response = repository.remote.getLatestMovie(apiKey)
                 latestMovieResponse.value = handleResponse(response)
             } catch (e: Exception) {
-                latestMovieResponse.value = NetworkResult.Error(message = "Movie Not Found!!")
+                latestMovieResponse.value =
+                    NetworkResult.Error(message = "Movie Not Found!! " + e.message)
             }
         } else {
             latestMovieResponse.value = NetworkResult.Error(message = "No Internet Connection")
@@ -105,7 +106,8 @@ class MoviesViewModel @ViewModelInject constructor(
                 val response = repository.remote.getMovieDetails(movieId, apiKey)
                 movieDetailsResponse.value = handleResponse(response)
             } catch (e: Exception) {
-                movieDetailsResponse.value = NetworkResult.Error(message = "Movie Not Found!!")
+                movieDetailsResponse.value =
+                    NetworkResult.Error(message = "Movie Not Found!! " + e.message)
             }
         } else {
             movieDetailsResponse.value = NetworkResult.Error(message = "No Internet Connection")
@@ -121,7 +123,7 @@ class MoviesViewModel @ViewModelInject constructor(
                 return NetworkResult.Error(message = "Quota Exceeded!!")
             }
             response.body() == null -> {
-                return NetworkResult.Error(message = "Movie not found.")
+                return NetworkResult.Error(message = "Movie not found. 2")
             }
             response.isSuccessful -> {
                 val movies = response.body()

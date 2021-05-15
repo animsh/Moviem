@@ -17,7 +17,7 @@ import com.animsh.moviem.util.NetworkResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 
 @ActivityRetainedScoped
-class CreditsFragment(
+class MovieCreditsFragment(
     private val movieId: Int
 ) : Fragment() {
 

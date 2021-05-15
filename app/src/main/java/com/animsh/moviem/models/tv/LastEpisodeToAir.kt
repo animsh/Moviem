@@ -1,27 +1,30 @@
 package com.animsh.moviem.models.tv
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class LastEpisodeToAir(
     @SerializedName("air_date")
-    val airDate: String,
+    val airDate: String?,
     @SerializedName("episode_number")
-    val episodeNumber: Int,
+    val episodeNumber: Int?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
     @SerializedName("production_code")
-    val productionCode: String,
+    val productionCode: String?,
     @SerializedName("season_number")
-    val seasonNumber: Int,
+    val seasonNumber: Int?,
     @SerializedName("still_path")
-    val stillPath: Any,
+    val stillPath: String?,
     @SerializedName("vote_average")
-    val voteAverage: Int,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int
-)
+    val voteCount: Int?
+) : Parcelable

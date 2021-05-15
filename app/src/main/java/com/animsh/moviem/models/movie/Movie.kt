@@ -12,7 +12,7 @@ data class Movie(
     @SerializedName("backdrop_path")
     val backdropPath: String?,
     @SerializedName("belongs_to_collection")
-    val belongsToCollection: String?,
+    val belongsToCollection: BelongsToCollection?,
     @SerializedName("budget")
     val budget: Int?,
     @SerializedName("genres")

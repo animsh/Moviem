@@ -1,21 +1,24 @@
 package com.animsh.moviem.models.tv
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Season(
     @SerializedName("air_date")
-    val airDate: Any,
+    val airDate: String?,
     @SerializedName("episode_count")
-    val episodeCount: Int,
+    val episodeCount: Int?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("season_number")
-    val seasonNumber: Int
-)
+    val seasonNumber: Int?
+) : Parcelable

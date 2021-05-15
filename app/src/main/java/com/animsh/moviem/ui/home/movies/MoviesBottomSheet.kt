@@ -65,7 +65,7 @@ class MoviesBottomSheet(
         moviesViewModel.getMovieDetails(movieId, Constants.API_KEY).invokeOnCompletion {
             Log.d(
                 "TAGTAGTAG",
-                "requestApiData: " + moviesViewModel.movieDetailsResponse.value?.data?.id
+                "requestApiData: $movieId"
             )
         }
         moviesViewModel.movieDetailsResponse.observe(viewLifecycleOwner, { response ->

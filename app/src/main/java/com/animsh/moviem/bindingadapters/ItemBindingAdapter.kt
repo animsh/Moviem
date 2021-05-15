@@ -97,15 +97,29 @@ class ItemBindingAdapter {
         fun loadRuntime(textView: TextView, runtime: Int) {
             val hours = runtime / 60 //since both are ints, you get an int
             val minutes = abs(runtime) % 60
-            when (textView.id) {
-                R.id.bRuntime -> {
-                    textView.text = MessageFormat.format("{0}h {1}m", hours, minutes)
+            if (hours != 0) {
+                when (textView.id) {
+                    R.id.bRuntime -> {
+                        textView.text = MessageFormat.format("{0}h {1}m", hours, minutes)
+                    }
+                    R.id.tRuntime -> {
+                        textView.text = MessageFormat.format("{0}h {1}m/ep", hours, minutes)
+                    }
+                    else -> {
+                        textView.text = MessageFormat.format("● {0}h {1}m", hours, minutes)
+                    }
                 }
-                R.id.tRuntime -> {
-                    textView.text = MessageFormat.format("{0}h {1}m/ep", hours, minutes)
-                }
-                else -> {
-                    textView.text = MessageFormat.format("● {0}h {1}m", hours, minutes)
+            } else {
+                when (textView.id) {
+                    R.id.bRuntime -> {
+                        textView.text = MessageFormat.format("{0}m", minutes)
+                    }
+                    R.id.tRuntime -> {
+                        textView.text = MessageFormat.format("{0}m/ep", minutes)
+                    }
+                    else -> {
+                        textView.text = MessageFormat.format("● {0}m", minutes)
+                    }
                 }
             }
         }
@@ -224,6 +238,88 @@ class ItemBindingAdapter {
             } else {
                 textView.text = "Female"
             }
+        }
+
+        @BindingAdapter("android:loadTVGenres")
+        @JvmStatic
+        fun loadTVGenres(textView: TextView, genres: List<com.animsh.moviem.models.tv.Genre>?) {
+            var genresTxt = ""
+            if (genres != null) {
+                for (i in genres.indices) {
+                    genresTxt = if (i == 0) {
+                        genresTxt + genres[i].name
+                    } else {
+                        genresTxt + ", " + genres[i].name
+                    }
+                }
+            } else {
+                genresTxt = "?"
+            }
+            textView.text = genresTxt
+        }
+
+
+        @BindingAdapter("android:loadTVProductionCompanies")
+        @JvmStatic
+        fun loadTVProductionCompanies(
+            textView: TextView,
+            list: List<com.animsh.moviem.models.tv.ProductionCompany>?
+        ) {
+            var pcTxt = ""
+            if (list != null) {
+                for (i in list.indices) {
+                    pcTxt = if (i == 0) {
+                        pcTxt + list[i].name
+                    } else {
+                        pcTxt + ", " + list[i].name
+                    }
+                }
+            } else {
+                pcTxt = "?"
+            }
+            textView.text = pcTxt
+        }
+
+        @BindingAdapter("android:loadTVProductionCountries")
+        @JvmStatic
+        fun loadTVProductionCountries(
+            textView: TextView,
+            list: List<com.animsh.moviem.models.tv.ProductionCountry>?
+        ) {
+            var pcTxt = ""
+            if (list != null) {
+                for (i in list.indices) {
+                    pcTxt = if (i == 0) {
+                        pcTxt + list[i].name
+                    } else {
+                        pcTxt + ", " + list[i].name
+                    }
+                }
+            } else {
+                pcTxt = "?"
+            }
+            textView.text = pcTxt
+        }
+
+        @BindingAdapter("android:loadTVSpokenLanguages")
+        @JvmStatic
+        fun loadTVSpokenLanguages(
+            textView: TextView,
+            list: List<com.animsh.moviem.models.tv.SpokenLanguage>?
+        ) {
+            var pcTxt = ""
+            if (list != null) {
+                for (i in list.indices) {
+                    pcTxt = if (i == 0) {
+                        pcTxt + list[i].name
+                    } else {
+                        pcTxt + ", " + list[i].name
+                    }
+                }
+            } else {
+                pcTxt = "?"
+            }
+            textView.text = pcTxt
         }
 
     }

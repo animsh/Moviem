@@ -91,4 +91,27 @@ class RemoteDataSource @Inject constructor(
     suspend fun getTrendingTv(apiKey: String, page: Int): Response<TvResponse> {
         return tmdbApi.getTrendingTVShows(apiKey, page)
     }
+
+    suspend fun getSimilarTVDetails(
+        tvId: Int,
+        apiKey: String,
+        page: Int
+    ): Response<TvResponse> {
+        return tmdbApi.getSimilarTV(tvId, apiKey, page)
+    }
+
+    suspend fun getRecommendationTVDetails(
+        tvId: Int,
+        apiKey: String,
+        page: Int
+    ): Response<TvResponse> {
+        return tmdbApi.getRecommendationsTV(tvId, apiKey, page)
+    }
+
+    suspend fun getTVCreditsDetails(
+        tvId: Int,
+        apiKey: String
+    ): Response<CreditsResponse> {
+        return tmdbApi.getCreditsTV(tvId, apiKey)
+    }
 }

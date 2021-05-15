@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.animsh.moviem.data.repositories.Repository
+import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
 import com.animsh.moviem.util.Constants
@@ -25,6 +26,12 @@ class TvViewModel @ViewModelInject constructor(
 
     var tvDetailsResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
 
+    var similarTvResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
+
+    var recommendedTvResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
+
+    var creditResponse: MutableLiveData<NetworkResult<CreditsResponse>> = MutableLiveData()
+
     var tvOnAirResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
 
     var tvAiringTodayResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
@@ -41,6 +48,18 @@ class TvViewModel @ViewModelInject constructor(
 
     fun getTvDetails(tvId: Int, apiKey: String) = viewModelScope.launch {
         getTvDetailsSafeCAll(tvId, apiKey)
+    }
+
+    fun getSimilarTv(tvId: Int, apiKey: String, page: Int) = viewModelScope.launch {
+        getSimilarTvSafeCall(tvId, apiKey, page)
+    }
+
+    fun getRecommendedTv(tvId: Int, apiKey: String, page: Int) = viewModelScope.launch {
+        getRecommendedTvSafeCall(tvId, apiKey, page)
+    }
+
+    fun getCreditsTv(tvId: Int, apiKey: String) = viewModelScope.launch {
+        getCreditSafeCall(tvId, apiKey)
     }
 
     fun getOnAirTv(apiKey: String, page: Int) = viewModelScope.launch {
@@ -134,6 +153,69 @@ class TvViewModel @ViewModelInject constructor(
         }
     }
 
+    private suspend fun getSimilarTvSafeCall(tvId: Int, apiKey: String, page: Int) {
+        similarTvResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getSimilarTVDetails(tvId, apiKey, page)
+                similarTvResponse.value = handleListResponse(response)
+            } catch (e: Exception) {
+                similarTvResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+            }
+        } else {
+            similarTvResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private suspend fun getRecommendedTvSafeCall(tvId: Int, apiKey: String, page: Int) {
+        recommendedTvResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getRecommendationTVDetails(tvId, apiKey, page)
+                recommendedTvResponse.value = handleListResponse(response)
+            } catch (e: Exception) {
+                recommendedTvResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+            }
+        } else {
+            recommendedTvResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private suspend fun getCreditSafeCall(tvId: Int, apiKey: String) {
+        creditResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getTVCreditsDetails(tvId, apiKey)
+                creditResponse.value = handleCreditResponse(response)
+            } catch (e: Exception) {
+                creditResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+            }
+        } else {
+            creditResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
+    private fun handleCreditResponse(response: Response<CreditsResponse>): NetworkResult<CreditsResponse>? {
+        when {
+            response.message().toString().contains("timeout") -> {
+                return NetworkResult.Error(message = "Timeout!!!")
+            }
+            response.code() == 402 -> {
+                return NetworkResult.Error(message = "Quota Exceeded!!")
+            }
+            response.body() == null -> {
+                return NetworkResult.Error(message = "Credits not found.")
+            }
+            response.isSuccessful -> {
+                val credits = response.body()
+                return NetworkResult.Success(credits!!)
+            }
+            else -> {
+                return NetworkResult.Error(message = response.message())
+            }
+        }
+    }
+
     private fun handleListResponse(response: Response<TvResponse>): NetworkResult<TvResponse> {
         when {
             response.message().toString().contains("timeout") -> {
@@ -176,7 +258,8 @@ class TvViewModel @ViewModelInject constructor(
                 val response = repository.remote.getTVDetails(tvId, apiKey)
                 tvDetailsResponse.value = handleResponse(response)
             } catch (e: Exception) {
-                tvDetailsResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+                tvDetailsResponse.value =
+                    NetworkResult.Error(message = "Tv Not Found!!" + e.message)
             }
         } else {
             tvDetailsResponse.value = NetworkResult.Error(message = "No Internet Connection")

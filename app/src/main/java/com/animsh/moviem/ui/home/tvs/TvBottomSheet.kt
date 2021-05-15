@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.home.tvs
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.LayoutBottomSheetTvBinding
 import com.animsh.moviem.models.tv.Result
+import com.animsh.moviem.ui.home.tvs.details.TVDetailsActivity
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -41,7 +43,13 @@ class TvBottomSheet(
         super.onViewCreated(view, savedInstanceState)
         tvViewModel = ViewModelProvider(requireActivity()).get(TvViewModel::class.java)
         binding.apply {
-            requestApiData(result.id)
+            requestApiData(result.id!!)
+            Log.d(TAG, "onViewCreated: " + result.id)
+            infoBtn.setOnClickListener {
+                val intent: Intent = Intent(context, TVDetailsActivity::class.java)
+                intent.putExtra("tv", binding.data)
+                context?.startActivity(intent)
+            }
         }
     }
 
