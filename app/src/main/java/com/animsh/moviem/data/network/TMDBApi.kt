@@ -1,9 +1,6 @@
 package com.animsh.moviem.data.network
 
-import com.animsh.moviem.models.movie.CommonMovieResponse
-import com.animsh.moviem.models.movie.CreditsResponse
-import com.animsh.moviem.models.movie.Movie
-import com.animsh.moviem.models.movie.UniqueMovieResponse
+import com.animsh.moviem.models.movie.*
 import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
 import com.animsh.moviem.models.tv.episodes.SeasonResponse
@@ -48,6 +45,12 @@ interface TMDBApi {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<CreditsResponse>
+
+    @GET("3/movie/upcoming")
+    suspend fun getUpcomingMovie(
+        @Query("api_key") apiKey: String, @Query("page") page: Int
+    ): Response<ComingSoonResponse>
+
 
     @GET("3/trending/movie/day")
     suspend fun getTrendingMovie(

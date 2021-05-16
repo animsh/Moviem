@@ -55,12 +55,7 @@ class TvShowsFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        tvViewModel.getLatestTv(API_KEY).invokeOnCompletion {
-            Log.d(
-                "TAGTAGTAG",
-                "requestApiData: " + tvViewModel.latestTvResponse.value?.data?.id
-            )
-        }
+        tvViewModel.getLatestTv(API_KEY)
         tvViewModel.latestTvResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {

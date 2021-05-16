@@ -6,10 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.animsh.moviem.data.repositories.Repository
-import com.animsh.moviem.models.movie.CommonMovieResponse
-import com.animsh.moviem.models.movie.CreditsResponse
-import com.animsh.moviem.models.movie.Movie
-import com.animsh.moviem.models.movie.UniqueMovieResponse
+import com.animsh.moviem.models.movie.*
 import com.animsh.moviem.util.Constants.Companion.hasInternetConnection
 import com.animsh.moviem.util.NetworkResult
 import kotlinx.coroutines.launch
@@ -34,6 +31,9 @@ class MoviesViewModel @ViewModelInject constructor(
         MutableLiveData()
 
     var movieCreditsResponse: MutableLiveData<NetworkResult<CreditsResponse>> =
+        MutableLiveData()
+
+    var comingSoonResponse: MutableLiveData<NetworkResult<ComingSoonResponse>> =
         MutableLiveData()
 
     var trendingMovieResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
@@ -66,6 +66,10 @@ class MoviesViewModel @ViewModelInject constructor(
 
     fun getMovieCredits(movieId: Int, apiKey: String) = viewModelScope.launch {
         getMovieCreditsSafeCall(movieId, apiKey)
+    }
+
+    fun getComingSonMovies(apiKey: String, page: Int) = viewModelScope.launch {
+        getComingSoonMoviesSafeCall(apiKey, page)
     }
 
     fun getTrendingMovies(apiKey: String, page: Int) = viewModelScope.launch {
@@ -222,6 +226,23 @@ class MoviesViewModel @ViewModelInject constructor(
         }
     }
 
+    private suspend fun getComingSoonMoviesSafeCall(apiKey: String, page: Int) {
+        comingSoonResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection(getApplication())) {
+            try {
+                val response =
+                    repository.remote.getUpcomingMovies(apiKey, page)
+                comingSoonResponse.value = handleComingSoonResponse(response)
+            } catch (e: Exception) {
+                comingSoonResponse.value =
+                    NetworkResult.Error(message = "Movies Not Found!!")
+            }
+        } else {
+            comingSoonResponse.value =
+                NetworkResult.Error(message = "No Internet Connection")
+        }
+    }
+
     private suspend fun getMovieCreditsSafeCall(movieId: Int, apiKey: String) {
         movieCreditsResponse.value = NetworkResult.Loading()
         if (hasInternetConnection(getApplication())) {
@@ -238,6 +259,28 @@ class MoviesViewModel @ViewModelInject constructor(
                 NetworkResult.Error(message = "No Internet Connection")
         }
     }
+
+    private fun handleComingSoonResponse(response: Response<ComingSoonResponse>): NetworkResult<ComingSoonResponse>? {
+        when {
+            response.message().toString().contains("timeout") -> {
+                return NetworkResult.Error(message = "Timeout!!!")
+            }
+            response.code() == 402 -> {
+                return NetworkResult.Error(message = "Quota Exceeded!!")
+            }
+            response.body()!!.results.isNullOrEmpty() -> {
+                return NetworkResult.Error(message = "Movies not found.")
+            }
+            response.isSuccessful -> {
+                val movies = response.body()
+                return NetworkResult.Success(movies!!)
+            }
+            else -> {
+                return NetworkResult.Error(message = response.message())
+            }
+        }
+    }
+
 
     private fun handleCreditsResponse(response: Response<CreditsResponse>): NetworkResult<CreditsResponse>? {
         return when {

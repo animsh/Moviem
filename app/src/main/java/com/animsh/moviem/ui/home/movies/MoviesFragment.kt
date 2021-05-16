@@ -57,12 +57,7 @@ class MoviesFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        moviesViewModel.getLatestMovie(API_KEY).invokeOnCompletion {
-            Log.d(
-                "TAGTAGTAG",
-                "requestApiData: " + moviesViewModel.latestMovieResponse.value?.data?.id
-            )
-        }
+        moviesViewModel.getLatestMovie(API_KEY)
         moviesViewModel.latestMovieResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {
