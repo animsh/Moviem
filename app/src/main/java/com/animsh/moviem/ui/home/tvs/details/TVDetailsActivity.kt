@@ -20,10 +20,14 @@ class TVDetailsActivity : AppCompatActivity() {
             val data: TV? = intent.getParcelableExtra<TV>("tv")
             tv = data
             tabLayout.setupWithViewPager(viewPager)
-            viewPager.offscreenPageLimit = 3
+            viewPager.offscreenPageLimit = 4
             val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, 0)
-            viewPagerAdapter.addFragment(SRTVFragment(data!!.id!!, 0), "More Like This")
-            viewPagerAdapter.addFragment(SRTVFragment(data.id!!, 1), "Recommendations")
+            viewPagerAdapter.addFragment(
+                SeasonsFragment(data!!.id!!, data.numberOfSeasons!!),
+                "Episodes"
+            )
+            viewPagerAdapter.addFragment(SRTVFragment(data.id!!, 0), "More Like This")
+            viewPagerAdapter.addFragment(SRTVFragment(data.id, 1), "Recommendations")
             viewPagerAdapter.addFragment(TvCreditsFragment(data.id), "Crew & Cast")
             viewPager.adapter = viewPagerAdapter
         }

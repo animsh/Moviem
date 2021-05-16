@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:gravity="center"
-                        android:loadRuntime="@{data.episodeRunTime.get(0)}"
+                        android:loadRuntime="@{data.episodeRunTime.empty ? 0 : data.episodeRunTime.get(0)}"
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
 

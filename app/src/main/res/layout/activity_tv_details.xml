@@ -116,7 +116,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/_5sdp"
-                                android:loadRuntime="@{Tv.episodeRunTime.get(0)}"
+                                android:loadRuntime="@{Tv.episodeRunTime.empty ? 0 : Tv.episodeRunTime.get(0)}"
                                 android:textColor="?attr/sub_text_color" />
 
                             <TextView

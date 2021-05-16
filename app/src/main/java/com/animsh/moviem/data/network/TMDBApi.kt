@@ -6,6 +6,7 @@ import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
 import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
+import com.animsh.moviem.models.tv.episodes.SeasonResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -122,5 +123,12 @@ interface TMDBApi {
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String
     ): Response<CreditsResponse>
+
+    @GET("3/tv/{tv_id}/season/{season_number}")
+    suspend fun getTVEpisodes(
+        @Path("tv_id") tvId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Query("api_key") apiKey: String
+    ): Response<SeasonResponse>
 
 }

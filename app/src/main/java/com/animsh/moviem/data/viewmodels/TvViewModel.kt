@@ -9,6 +9,7 @@ import com.animsh.moviem.data.repositories.Repository
 import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
+import com.animsh.moviem.models.tv.episodes.SeasonResponse
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
 import kotlinx.coroutines.launch
@@ -21,6 +22,12 @@ class TvViewModel @ViewModelInject constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
+
+    var chosenSeason: MutableLiveData<Int> = MutableLiveData()
+
+    fun setSeason(seasonNumber: Int) {
+        chosenSeason.value = seasonNumber
+    }
 
     var latestTvResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
 
@@ -41,6 +48,8 @@ class TvViewModel @ViewModelInject constructor(
     var topTvResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
 
     var trendingResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
+
+    var seasonResponse: MutableLiveData<NetworkResult<SeasonResponse>> = MutableLiveData()
 
     fun getLatestTv(apiKey: String) = viewModelScope.launch {
         getLatestTvSafeCAll(apiKey)
@@ -68,6 +77,24 @@ class TvViewModel @ViewModelInject constructor(
 
     fun getAiringToday(apiKey: String, page: Int) = viewModelScope.launch {
         getAiringTodaySafeCall(apiKey, page)
+    }
+
+    fun getTVEpisode(tvId: Int, seasonNumber: Int, apiKey: String) = viewModelScope.launch {
+        getTVEpisodeSafeCall(tvId, seasonNumber, apiKey)
+    }
+
+    private suspend fun getTVEpisodeSafeCall(tvId: Int, seasonNumber: Int, apiKey: String) {
+        seasonResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.getTVEpisodes(tvId, seasonNumber, apiKey)
+                seasonResponse.value = handleSeasonResponse(response)
+            } catch (e: Exception) {
+                seasonResponse.value = NetworkResult.Error(message = "Tv Not Found!!")
+            }
+        } else {
+            seasonResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
     }
 
     private suspend fun getAiringTodaySafeCall(apiKey: String, page: Int) {
@@ -286,5 +313,27 @@ class TvViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    private fun handleSeasonResponse(response: Response<SeasonResponse>): NetworkResult<SeasonResponse>? {
+        when {
+            response.message().toString().contains("timeout") -> {
+                return NetworkResult.Error(message = "Timeout!!!")
+            }
+            response.code() == 402 -> {
+                return NetworkResult.Error(message = "Quota Exceeded!!")
+            }
+            response.body() == null -> {
+                return NetworkResult.Error(message = "Season not found.")
+            }
+            response.isSuccessful -> {
+                val tv = response.body()
+                return NetworkResult.Success(tv!!)
+            }
+            else -> {
+                return NetworkResult.Error(message = response.message())
+            }
+        }
+    }
+
 
 }

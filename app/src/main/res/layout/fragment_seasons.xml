@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.tvs.details.SeasonsFragment">
+
+        <com.todkars.shimmer.ShimmerRecyclerView
+            android:id="@+id/episodeRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_60sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/seasonBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:backgroundTint="?attr/bottom_sheet_color"
+            android:textAllCaps="false"
+            android:textColor="?attr/text_color"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_arrow_down"
+            app:iconGravity="end"
+            app:iconPadding="@dimen/_5sdp"
+            app:iconTint="?attr/text_color" />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No Data Found"
+            android:textColor="?attr/sub_text_color"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</layout>

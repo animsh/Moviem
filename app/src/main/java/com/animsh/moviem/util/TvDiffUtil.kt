@@ -1,14 +1,13 @@
 package com.animsh.moviem.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.animsh.moviem.models.tv.Result
 
 /**
  * Created by animsh on 2/27/2021.
  */
-class TvDiffUtil(
-    private val oldList: List<Result>,
-    private val newList: List<Result>
+class TvDiffUtil<T>(
+    private val oldList: List<T>,
+    private val newList: List<T>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size

@@ -7,6 +7,7 @@ import com.animsh.moviem.models.movie.Movie
 import com.animsh.moviem.models.movie.UniqueMovieResponse
 import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.models.tv.TvResponse
+import com.animsh.moviem.models.tv.episodes.SeasonResponse
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -113,5 +114,13 @@ class RemoteDataSource @Inject constructor(
         apiKey: String
     ): Response<CreditsResponse> {
         return tmdbApi.getCreditsTV(tvId, apiKey)
+    }
+
+    suspend fun getTVEpisodes(
+        tvId: Int,
+        seasonNumber: Int,
+        apiKey: String
+    ): Response<SeasonResponse> {
+        return tmdbApi.getTVEpisodes(tvId, seasonNumber, apiKey)
     }
 }
