@@ -99,7 +99,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/_5sdp"
-                                android:text="@{Movie.releaseDate.substring(0,4)}"
+                                android:text="@{Movie.releaseDate.empty ? `null` : Movie.releaseDate.substring(0,4)}"
                                 android:textColor="?attr/sub_text_color" />
 
                             <TextView

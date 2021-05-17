@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.home.movies
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.adapters.MovieAdapter
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.databinding.FragmentMoviesBinding
+import com.animsh.moviem.ui.home.movies.details.MovieDetailsActivity
 import com.animsh.moviem.util.Constants.Companion.API_KEY
 import com.animsh.moviem.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +47,8 @@ class MoviesFragment : Fragment() {
         setupRecyclerView()
         requestApiData()
 
+
+
         fragmentMoviesBinding.refreshLayout.setOnRefreshListener {
             showShimmer()
             topMoviesAdapter.clearList()
@@ -65,6 +69,11 @@ class MoviesFragment : Fragment() {
                     mView.posterShimmer.visibility = GONE
                     response.data?.let {
                         fragmentMoviesBinding.latestMovie = it
+                        fragmentMoviesBinding.latestMovieInfo.setOnClickListener { view ->
+                            val intent: Intent = Intent(context, MovieDetailsActivity::class.java)
+                            intent.putExtra("movie", it)
+                            context?.startActivity(intent)
+                        }
                         Log.d("LOGDATA", "requestApiData: 1")
                     }
                 }

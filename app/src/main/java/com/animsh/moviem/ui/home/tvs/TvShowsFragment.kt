@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.home.tvs
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.adapters.TvAdapter
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.FragmentTvShowsBinding
+import com.animsh.moviem.ui.home.tvs.details.TVDetailsActivity
 import com.animsh.moviem.util.Constants.Companion.API_KEY
 import com.animsh.moviem.util.NetworkResult
 import kotlinx.android.synthetic.main.fragment_tv_shows.view.*
@@ -63,6 +65,11 @@ class TvShowsFragment : Fragment() {
                     mView.posterShimmer.visibility = View.GONE
                     response.data?.let {
                         fragmentTvShowsBinding.latestTv = it
+                        fragmentTvShowsBinding.latestTVInfo.setOnClickListener { view ->
+                            val intent: Intent = Intent(context, TVDetailsActivity::class.java)
+                            intent.putExtra("tv", it)
+                            context?.startActivity(intent)
+                        }
                         Log.d("LOGDATA", "requestApiData: 1")
                     }
                 }
