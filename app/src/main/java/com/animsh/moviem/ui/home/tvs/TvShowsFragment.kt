@@ -1,6 +1,8 @@
 package com.animsh.moviem.ui.home.tvs
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,9 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.adapters.TvAdapter
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.FragmentTvShowsBinding
+import com.animsh.moviem.ui.home.movies.MoviesBottomSheet
 import com.animsh.moviem.ui.home.tvs.details.TVDetailsActivity
+import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.Constants.Companion.API_KEY
 import com.animsh.moviem.util.NetworkResult
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_tv_shows.view.*
 
 class TvShowsFragment : Fragment() {
@@ -70,6 +76,54 @@ class TvShowsFragment : Fragment() {
                             intent.putExtra("tv", it)
                             context?.startActivity(intent)
                         }
+                        fragmentTvShowsBinding.shareBtn.setOnClickListener { view ->
+                            Picasso.get()
+                                .load(Constants.IMAGE_W500 + it.posterPath)
+                                .into(object : Target {
+                                    override fun onBitmapLoaded(
+                                        bitmap: Bitmap?,
+                                        from: Picasso.LoadedFrom?
+                                    ) {
+                                        val intent = Intent(Intent.ACTION_SEND)
+                                        intent.type = "image/*"
+                                        intent.putExtra(
+                                            Intent.EXTRA_STREAM,
+                                            Constants.getLocalBitmapUri(
+                                                bitmap!!,
+                                                requireContext(),
+                                                it.name!!
+                                            )
+                                        )
+                                        val dataText = "${it.name}\n${it.homepage}"
+                                        intent.putExtra(
+                                            Intent.EXTRA_TEXT,
+                                            dataText
+                                        )
+                                        startActivity(Intent.createChooser(intent, "Share Movie"))
+                                    }
+
+                                    override fun onBitmapFailed(
+                                        e: Exception?,
+                                        errorDrawable: Drawable?
+                                    ) {
+                                        Log.d(
+                                            MoviesBottomSheet.TAG,
+                                            "onBitmapFailed: " + e?.message
+                                        )
+                                        val intent = Intent(Intent.ACTION_SEND)
+                                        intent.type = "text/plain"
+                                        val dataText = "${it.name}\n${it.homepage}"
+                                        intent.putExtra(
+                                            Intent.EXTRA_TEXT,
+                                            dataText
+                                        )
+                                        startActivity(Intent.createChooser(intent, "Share Movie"))
+                                    }
+
+                                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                                })
+                        }
+
                         Log.d("LOGDATA", "requestApiData: 1")
                     }
                 }

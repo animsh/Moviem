@@ -175,6 +175,7 @@
                                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
 
                             <com.google.android.material.button.MaterialButton
+                                android:id="@+id/shareBtn"
                                 style="@style/MtButtonStyle"
                                 android:layout_width="@dimen/_30sdp"
                                 android:layout_height="@dimen/_30sdp"

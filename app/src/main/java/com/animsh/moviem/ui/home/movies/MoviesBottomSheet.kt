@@ -1,6 +1,8 @@
 package com.animsh.moviem.ui.home.movies
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +14,14 @@ import com.animsh.moviem.databinding.LayoutBottomSheetMoviesBinding
 import com.animsh.moviem.models.movie.Result
 import com.animsh.moviem.ui.home.movies.details.MovieDetailsActivity
 import com.animsh.moviem.util.Constants
+import com.animsh.moviem.util.Constants.Companion.IMAGE_W500
+import com.animsh.moviem.util.Constants.Companion.getLocalBitmapUri
 import com.animsh.moviem.util.NetworkResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Picasso.LoadedFrom
+import com.squareup.picasso.Target
+
 
 /**
  * Created by animsh on 5/8/2021.
@@ -48,6 +56,41 @@ class MoviesBottomSheet(
                 val intent: Intent = Intent(context, MovieDetailsActivity::class.java)
                 intent.putExtra("movie", binding.data)
                 context?.startActivity(intent)
+            }
+
+            shareBtn.setOnClickListener {
+                Picasso.get()
+                    .load(IMAGE_W500 + binding.data?.posterPath)
+                    .into(object : Target {
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: LoadedFrom?) {
+                            val intent = Intent(Intent.ACTION_SEND)
+                            intent.type = "image/*"
+                            intent.putExtra(
+                                Intent.EXTRA_STREAM,
+                                getLocalBitmapUri(bitmap!!, context!!, binding.data?.title!!)
+                            )
+                            val dataText = "${binding.data?.title!!}\n${binding.data?.homepage!!}"
+                            intent.putExtra(
+                                Intent.EXTRA_TEXT,
+                                dataText
+                            )
+                            startActivity(Intent.createChooser(intent, "Share Movie"))
+                        }
+
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                            Log.d(TAG, "onBitmapFailed: " + e?.message)
+                            val intent = Intent(Intent.ACTION_SEND)
+                            intent.type = "text/plain"
+                            val dataText = "${binding.data?.title!!}\n${binding.data?.homepage!!}"
+                            intent.putExtra(
+                                Intent.EXTRA_TEXT,
+                                dataText
+                            )
+                            startActivity(Intent.createChooser(intent, "Share Movie"))
+                        }
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+                    })
             }
         }
     }
