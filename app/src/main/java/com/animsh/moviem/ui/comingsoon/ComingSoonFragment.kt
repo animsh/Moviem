@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.comingsoon
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.adapters.ComingSoonAdapter
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.databinding.FragmentComingSoonBinding
+import com.animsh.moviem.ui.search.SearchActivity
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +46,10 @@ class ComingSoonFragment : Fragment() {
             this!!.comingSoonMoviesRv.adapter = comingSoonAdapter
             comingSoonMoviesRv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
+            searchButton.setOnClickListener {
+                val intent = Intent(requireActivity(), SearchActivity::class.java)
+                startActivity(intent)
+            }
             requestApiData()
         }
     }

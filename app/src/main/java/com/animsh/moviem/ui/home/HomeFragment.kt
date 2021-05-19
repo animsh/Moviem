@@ -1,5 +1,6 @@
 package com.animsh.moviem.ui.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import com.animsh.moviem.databinding.FragmentHomeBinding
 import com.animsh.moviem.ui.home.movies.MoviesFragment
 import com.animsh.moviem.ui.home.mylist.MyListFragment
 import com.animsh.moviem.ui.home.tvs.TvShowsFragment
+import com.animsh.moviem.ui.search.SearchActivity
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -29,6 +31,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewPager.apply {
                 adapter = viewPagerAdapter
                 offscreenPageLimit = 3
+            }
+            searchButton.setOnClickListener {
+                val intent = Intent(requireActivity(), SearchActivity::class.java)
+                startActivity(intent)
             }
         }
 

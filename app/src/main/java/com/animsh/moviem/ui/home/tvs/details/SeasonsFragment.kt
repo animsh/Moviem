@@ -1,6 +1,5 @@
 package com.animsh.moviem.ui.home.tvs.details
 
-import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -22,6 +21,7 @@ import com.animsh.moviem.adapters.EpisodesAdapter
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.FragmentSeasonsBinding
 import com.animsh.moviem.util.Constants
+import com.animsh.moviem.util.Constants.Companion.modeChecker
 import com.animsh.moviem.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_season_selector.view.*
@@ -121,7 +121,7 @@ class SeasonsFragment(
             tv.gravity = Gravity.CENTER
             tv.height = 90
             tv.setTypeface(font, Typeface.NORMAL)
-            if (modeChecker()) {
+            if (modeChecker(requireContext())) {
                 tv.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -140,7 +140,7 @@ class SeasonsFragment(
                 if (i == seasonNumber) {
                     tv.textSize = 24F
                     tv.setTypeface(font, Typeface.BOLD)
-                    if (modeChecker()) {
+                    if (modeChecker(requireContext())) {
                         tv.setTextColor(
                             ContextCompat.getColor(
                                 requireContext(),
@@ -169,16 +169,5 @@ class SeasonsFragment(
             ColorDrawable(Color.TRANSPARENT)
         )
         dialog.window?.setDimAmount(0.8f)
-    }
-
-    private fun modeChecker(): Boolean {
-        val nightModeFlags = requireActivity().resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
-        return when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> true
-            Configuration.UI_MODE_NIGHT_NO -> false
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> false
-            else -> false
-        }
     }
 }

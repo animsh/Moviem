@@ -36,6 +36,10 @@ class MoviesViewModel @ViewModelInject constructor(
     var comingSoonResponse: MutableLiveData<NetworkResult<ComingSoonResponse>> =
         MutableLiveData()
 
+
+    var searchMovieResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
+        MutableLiveData()
+
     var trendingMovieResponse: MutableLiveData<NetworkResult<CommonMovieResponse>> =
         MutableLiveData()
 
@@ -70,6 +74,10 @@ class MoviesViewModel @ViewModelInject constructor(
 
     fun getComingSonMovies(apiKey: String, page: Int) = viewModelScope.launch {
         getComingSoonMoviesSafeCall(apiKey, page)
+    }
+
+    fun searchMovies(apiKey: String, query: String) = viewModelScope.launch {
+        searchMoviesSafeCall(apiKey, query)
     }
 
     fun getTrendingMovies(apiKey: String, page: Int) = viewModelScope.launch {
@@ -136,6 +144,20 @@ class MoviesViewModel @ViewModelInject constructor(
             else -> {
                 return NetworkResult.Error(message = response.message())
             }
+        }
+    }
+
+    private suspend fun searchMoviesSafeCall(apiKey: String, query: String) {
+        searchMovieResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.searchMovies(apiKey, query)
+                searchMovieResponse.value = handleCommonResponse(response)
+            } catch (e: Exception) {
+                searchMovieResponse.value = NetworkResult.Error(message = "Movies Not Found!!")
+            }
+        } else {
+            searchMovieResponse.value = NetworkResult.Error(message = "No Internet Connection")
         }
     }
 

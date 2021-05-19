@@ -51,6 +51,15 @@ interface TMDBApi {
         @Query("api_key") apiKey: String, @Query("page") page: Int
     ): Response<ComingSoonResponse>
 
+    @GET("3/search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String, @Query("query") query: String
+    ): Response<CommonMovieResponse>
+
+    @GET("3/search/tv")
+    suspend fun searchTVShow(
+        @Query("api_key") apiKey: String, @Query("query") query: String
+    ): Response<TvResponse>
 
     @GET("3/trending/movie/day")
     suspend fun getTrendingMovie(

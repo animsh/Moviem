@@ -25,8 +25,14 @@ class TvViewModel @ViewModelInject constructor(
 
     var chosenSeason: MutableLiveData<Int> = MutableLiveData()
 
+    var searchChoice: MutableLiveData<String> = MutableLiveData()
+
     fun setSeason(seasonNumber: Int) {
         chosenSeason.value = seasonNumber
+    }
+
+    fun setSearchChoice(choice: String) {
+        searchChoice.value = choice
     }
 
     var latestTvResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
@@ -48,6 +54,8 @@ class TvViewModel @ViewModelInject constructor(
     var topTvResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
 
     var trendingResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
+
+    var searchResponse: MutableLiveData<NetworkResult<TvResponse>> = MutableLiveData()
 
     var seasonResponse: MutableLiveData<NetworkResult<SeasonResponse>> = MutableLiveData()
 
@@ -81,6 +89,24 @@ class TvViewModel @ViewModelInject constructor(
 
     fun getTVEpisode(tvId: Int, seasonNumber: Int, apiKey: String) = viewModelScope.launch {
         getTVEpisodeSafeCall(tvId, seasonNumber, apiKey)
+    }
+
+    fun searchTvShow(apiKey: String, query: String) = viewModelScope.launch {
+        searchTVShowSafeCall(apiKey, query)
+    }
+
+    private suspend fun searchTVShowSafeCall(apiKey: String, query: String) {
+        searchResponse.value = NetworkResult.Loading()
+        if (Constants.hasInternetConnection(getApplication())) {
+            try {
+                val response = repository.remote.searchTVShow(apiKey, query)
+                searchResponse.value = handleListResponse(response)
+            } catch (e: Exception) {
+                searchResponse.value = NetworkResult.Error(message = "o Tv Not Found!!")
+            }
+        } else {
+            searchResponse.value = NetworkResult.Error(message = "No Internet Connection")
+        }
     }
 
     private suspend fun getTVEpisodeSafeCall(tvId: Int, seasonNumber: Int, apiKey: String) {

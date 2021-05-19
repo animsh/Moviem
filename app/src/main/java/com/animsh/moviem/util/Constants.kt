@@ -2,6 +2,7 @@ package com.animsh.moviem.util
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -54,6 +55,17 @@ class Constants {
                 e.printStackTrace()
             }
             return bmpUri
+        }
+
+        fun modeChecker(context: Context): Boolean {
+            val nightModeFlags = context.resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK
+            return when (nightModeFlags) {
+                Configuration.UI_MODE_NIGHT_YES -> true
+                Configuration.UI_MODE_NIGHT_NO -> false
+                Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+                else -> false
+            }
         }
     }
 }

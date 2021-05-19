@@ -50,6 +50,10 @@ class RemoteDataSource @Inject constructor(
         return tmdbApi.getUpcomingMovie(apiKey, page)
     }
 
+    suspend fun searchMovies(apiKey: String, query: String): Response<CommonMovieResponse> {
+        return tmdbApi.searchMovie(apiKey, query)
+    }
+
     suspend fun getTrendingMovies(apiKey: String, page: Int): Response<CommonMovieResponse> {
         return tmdbApi.getTrendingMovie(apiKey, page)
     }
@@ -72,6 +76,10 @@ class RemoteDataSource @Inject constructor(
 
     suspend fun getTVDetails(tvId: Int, apiKey: String): Response<TV> {
         return tmdbApi.getTVShowDetails(tvId, apiKey)
+    }
+
+    suspend fun searchTVShow(apiKey: String, query: String): Response<TvResponse> {
+        return tmdbApi.searchTVShow(apiKey, query)
     }
 
     suspend fun getTvAiringToday(apiKey: String, page: Int): Response<TvResponse> {

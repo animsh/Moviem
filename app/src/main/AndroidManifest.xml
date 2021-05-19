@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".MoviemApplication"
         android:allowBackup="true"
@@ -17,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviem">
-        <activity android:name=".ui.home.tvs.details.TVDetailsActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.home.tvs.details.TVDetailsActivity" />
         <activity android:name=".ui.home.movies.details.MovieDetailsActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

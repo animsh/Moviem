@@ -67,7 +67,7 @@
                         android:id="@+id/year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{data.releaseDate.toString().substring(0,4)}"
+                        android:text="@{data.releaseDate.empty ? `null` : data.releaseDate.toString().substring(0,4)}"
                         android:textColor="?attr/sub_text_color"
                         android:textSize="@dimen/_10ssp" />
 
