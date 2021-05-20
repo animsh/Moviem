@@ -20,7 +20,8 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingTop="@dimen/_60sdp"
             android:paddingEnd="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_5sdp" />
+            android:paddingBottom="@dimen/_5sdp"
+            app:shimmer_recycler_layout="@layout/layout_episode_container_placeholder" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/seasonBtn"

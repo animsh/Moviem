@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -28,7 +29,8 @@
             <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/castRv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:shimmer_recycler_layout="@layout/item_crew_cast_container_placeholder" />
 
             <TextView
                 style="@style/TextAppearance"
@@ -42,7 +44,8 @@
             <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/crewRv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:shimmer_recycler_layout="@layout/item_crew_cast_container_placeholder" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
