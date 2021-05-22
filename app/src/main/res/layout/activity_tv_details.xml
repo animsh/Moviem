@@ -14,6 +14,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layoutTVDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/layout_color"
@@ -157,6 +158,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/tagline">
 
                             <com.google.android.material.button.MaterialButton
+                                android:id="@+id/addToMyList"
                                 style="@style/MtButtonStyle"
                                 android:layout_width="@dimen/_30sdp"
                                 android:layout_height="@dimen/_30sdp"

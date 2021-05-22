@@ -27,6 +27,7 @@ class Constants {
         // Movie Database
         const val FAVORITE_MOVIES_TABLE = "favorite_movies_table"
         const val FAVORITE_DATABASE = "favorite_database"
+        const val FAVORITE_TV_TABLE = "favorite_TV_table"
 
         fun hasInternetConnection(application: Application): Boolean {
             val connectivityManager = application.getSystemService(

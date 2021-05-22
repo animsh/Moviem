@@ -2,6 +2,7 @@ package com.animsh.moviem.data
 
 import com.animsh.moviem.data.database.FavoriteDao
 import com.animsh.moviem.data.database.entity.FavoriteMovieEntity
+import com.animsh.moviem.data.database.entity.FavoriteTVEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -26,5 +27,22 @@ class LocalDataSource @Inject constructor(
 
     suspend fun deleteAllFavMovies() {
         favoriteDao.deleteAllFavMovies()
+    }
+
+    // tv
+    fun readFavTvs(): Flow<List<FavoriteTVEntity>> {
+        return favoriteDao.readFavTV()
+    }
+
+    suspend fun insertFavTV(favoriteTVEntity: FavoriteTVEntity) {
+        favoriteDao.insertFavTV(favoriteTVEntity)
+    }
+
+    suspend fun deleteFavTV(favoriteTVEntity: FavoriteTVEntity) {
+        favoriteDao.deleteFavTV(favoriteTVEntity)
+    }
+
+    suspend fun deleteAllFavTVs() {
+        favoriteDao.deleteAllFavTVs()
     }
 }

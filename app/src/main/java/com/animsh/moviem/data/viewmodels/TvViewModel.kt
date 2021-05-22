@@ -2,9 +2,8 @@ package com.animsh.moviem.data.viewmodels
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.animsh.moviem.data.database.entity.FavoriteTVEntity
 import com.animsh.moviem.data.repositories.Repository
 import com.animsh.moviem.models.movie.CreditsResponse
 import com.animsh.moviem.models.tv.TV
@@ -12,6 +11,7 @@ import com.animsh.moviem.models.tv.TvResponse
 import com.animsh.moviem.models.tv.episodes.SeasonResponse
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -22,7 +22,25 @@ class TvViewModel @ViewModelInject constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
+    // Room
+    var readFavTV: LiveData<List<FavoriteTVEntity>> =
+        repository.local.readFavTvs().asLiveData()
 
+    fun insertFavTV(favoriteTVEntity: FavoriteTVEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertFavTV(favoriteTVEntity)
+        }
+
+    fun deleteFavTV(favoriteTVEntity: FavoriteTVEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteFavTV(favoriteTVEntity)
+        }
+
+    fun deleteAllFavTVs() = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.deleteAllFavTVs()
+    }
+
+    // online
     var chosenSeason: MutableLiveData<Int> = MutableLiveData()
 
     var searchChoice: MutableLiveData<String> = MutableLiveData()
