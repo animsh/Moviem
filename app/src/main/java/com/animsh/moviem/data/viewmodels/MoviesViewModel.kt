@@ -2,13 +2,13 @@ package com.animsh.moviem.data.viewmodels
 
 import android.app.Application
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.animsh.moviem.data.database.entity.FavoriteMovieEntity
 import com.animsh.moviem.data.repositories.Repository
 import com.animsh.moviem.models.movie.*
 import com.animsh.moviem.util.Constants.Companion.hasInternetConnection
 import com.animsh.moviem.util.NetworkResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -20,6 +20,25 @@ class MoviesViewModel @ViewModelInject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
+    // Room
+    var readFavMovie: LiveData<List<FavoriteMovieEntity>> =
+        repository.local.readFavMovies().asLiveData()
+
+    fun insertFavMovie(favoriteMovieEntity: FavoriteMovieEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertFavMovie(favoriteMovieEntity)
+        }
+
+    fun deleteFavMovie(favoriteMovieEntity: FavoriteMovieEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteFavMovie(favoriteMovieEntity)
+        }
+
+    fun deleteAllFavMovies() = viewModelScope.launch(Dispatchers.IO) {
+        repository.local.deleteAllFavMovies()
+    }
+
+    // online
     var latestMovieResponse: MutableLiveData<NetworkResult<Movie>> = MutableLiveData()
 
     var movieDetailsResponse: MutableLiveData<NetworkResult<Movie>> = MutableLiveData()

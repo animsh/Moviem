@@ -8,7 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
+import com.animsh.moviem.R
+import com.animsh.moviem.data.database.entity.FavoriteMovieEntity
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.databinding.LayoutBottomSheetMoviesBinding
 import com.animsh.moviem.models.movie.Result
@@ -18,6 +21,8 @@ import com.animsh.moviem.util.Constants.Companion.IMAGE_W500
 import com.animsh.moviem.util.Constants.Companion.getLocalBitmapUri
 import com.animsh.moviem.util.NetworkResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Picasso.LoadedFrom
 import com.squareup.picasso.Target
@@ -38,6 +43,9 @@ class MoviesBottomSheet(
     private val binding get() = _binding!!
     private lateinit var moviesViewModel: MoviesViewModel
 
+    private var movieSaved: Boolean = false
+    private var savedMovieId: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +64,7 @@ class MoviesBottomSheet(
                 val intent: Intent = Intent(context, MovieDetailsActivity::class.java)
                 intent.putExtra("movie", binding.data)
                 context?.startActivity(intent)
+                dismiss()
             }
 
             shareBtn.setOnClickListener {
@@ -92,7 +101,50 @@ class MoviesBottomSheet(
                         override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                     })
             }
+
+            addToMyList.setOnClickListener {
+                if (movieSaved) {
+                    removeFromFav(addToMyList)
+                } else {
+                    saveToFav(addToMyList)
+                }
+            }
+
+            checkFavMovieStatus()
         }
+    }
+
+    private fun saveToFav(addToMyList: MaterialButton) {
+        val favoriteMovieEntity = FavoriteMovieEntity(0, binding.data!!)
+        moviesViewModel.insertFavMovie(favoriteMovieEntity)
+        addToMyList.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_check, null)
+        showMessage("added to my list!!")
+        movieSaved = true
+    }
+
+    private fun removeFromFav(addToMyList: MaterialButton) {
+        val favoriteMovieEntity = FavoriteMovieEntity(savedMovieId, binding.data!!)
+        moviesViewModel.deleteFavMovie(favoriteMovieEntity)
+        addToMyList.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_add, null)
+        showMessage("removed from my list!!")
+        movieSaved = false
+    }
+
+    private fun checkFavMovieStatus() {
+        moviesViewModel.readFavMovie.observe(this, { favoriteEntity ->
+            try {
+                for (savedMovie in favoriteEntity) {
+                    if (savedMovie.result.id == result.id) {
+                        binding.addToMyList.icon =
+                            ResourcesCompat.getDrawable(resources, R.drawable.ic_check, null)
+                        movieSaved = true
+                        savedMovieId = savedMovie.id
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("TAGTAGTAG", "checkFavMovieStatus: " + e.message)
+            }
+        })
     }
 
     fun newInstance(): MoviesBottomSheet {
@@ -129,4 +181,13 @@ class MoviesBottomSheet(
         })
     }
 
+
+    private fun showMessage(message: String) {
+        Snackbar.make(
+            binding.layoutBottomSheetMovies,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).setAction("Okay") {}
+            .show()
+    }
 }

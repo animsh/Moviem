@@ -120,6 +120,7 @@
             app:layout_constraintTop_toBottomOf="@id/details">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/addToMyList"
                 style="@style/MyCustomFontTextAppearance"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

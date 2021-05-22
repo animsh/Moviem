@@ -24,6 +24,10 @@ class Constants {
         const val IMAGE_ORIGINAL = "https://image.tmdb.org/t/p/original/"
         const val IMAGE_W500 = "https://image.tmdb.org/t/p/w500/"
 
+        // Movie Database
+        const val FAVORITE_MOVIES_TABLE = "favorite_movies_table"
+        const val FAVORITE_DATABASE = "favorite_database"
+
         fun hasInternetConnection(application: Application): Boolean {
             val connectivityManager = application.getSystemService(
                 Context.CONNECTIVITY_SERVICE
