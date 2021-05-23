@@ -45,12 +45,18 @@ class TvViewModel @ViewModelInject constructor(
 
     var searchChoice: MutableLiveData<String> = MutableLiveData()
 
+    var myListChoice: MutableLiveData<String> = MutableLiveData()
+
     fun setSeason(seasonNumber: Int) {
         chosenSeason.value = seasonNumber
     }
 
     fun setSearchChoice(choice: String) {
         searchChoice.value = choice
+    }
+
+    fun setMyListChoice(choice: String) {
+        myListChoice.value = choice
     }
 
     var latestTvResponse: MutableLiveData<NetworkResult<TV>> = MutableLiveData()
