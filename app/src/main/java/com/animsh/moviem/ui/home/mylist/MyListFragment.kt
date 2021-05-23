@@ -21,8 +21,6 @@ import com.animsh.moviem.adapters.FavTvAdapter
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.FragmentMyListBinding
-import com.animsh.moviem.models.movie.Movie
-import com.animsh.moviem.models.tv.TV
 import com.animsh.moviem.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_season_selector.view.*
@@ -36,8 +34,9 @@ class MyListFragment : Fragment() {
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var tvViewModel: TvViewModel
 
-    private val moviesAdapter by lazy { FavMovieAdapter() }
-    private val tvAdapter by lazy { FavTvAdapter() }
+    val moviesAdapter by lazy { FavMovieAdapter(requireActivity(), moviesViewModel) }
+    val tvAdapter by lazy { FavTvAdapter(requireActivity(), tvViewModel) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,11 +70,7 @@ class MyListFragment : Fragment() {
         if (choice == "Movies") {
             binding!!.myListRecyclerview.adapter = moviesAdapter
             moviesViewModel.readFavMovie.observe(viewLifecycleOwner, { favEntity ->
-                val movies: MutableList<Movie> = ArrayList()
-                for (movie in favEntity) {
-                    movies.add(movie.result)
-                }
-                if (movies.size != 0) {
+                if (favEntity.isNotEmpty()) {
                     binding!!.animationView.visibility = View.GONE
                     binding!!.subText.visibility = View.GONE
                 } else {
@@ -83,16 +78,12 @@ class MyListFragment : Fragment() {
                     binding!!.subText.text = "Add movies in your list to get them here!"
                     binding!!.subText.visibility = View.VISIBLE
                 }
-                moviesAdapter.setListData(movies)
+                moviesAdapter.setListData(favEntity)
             })
         } else {
             binding!!.myListRecyclerview.adapter = tvAdapter
             tvViewModel.readFavTV.observe(viewLifecycleOwner, { favEntity ->
-                val tvShows: MutableList<TV> = ArrayList()
-                for (tv in favEntity) {
-                    tvShows.add(tv.result)
-                }
-                if (tvShows.size != 0) {
+                if (favEntity.isNotEmpty()) {
                     binding!!.animationView.visibility = View.GONE
                     binding!!.subText.visibility = View.GONE
                 } else {
@@ -100,7 +91,7 @@ class MyListFragment : Fragment() {
                     binding!!.subText.text = "Add tv shows in your list to get them here!"
                     binding!!.subText.visibility = View.VISIBLE
                 }
-                tvAdapter.setData(tvShows)
+                tvAdapter.setData(favEntity)
             })
         }
     }
@@ -179,4 +170,12 @@ class MyListFragment : Fragment() {
         )
         dialog.window?.setDimAmount(0.8f)
     }
+
+//    override fun setMenuVisibility(visible: Boolean) {
+//        if (!visible) {
+//            moviesAdapter.removeContextualActionMode()
+//            tvAdapter.removeContextualActionMode()
+//        }
+//        super.setMenuVisibility(visible)
+//    }
 }

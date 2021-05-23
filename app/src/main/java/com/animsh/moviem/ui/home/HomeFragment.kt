@@ -13,11 +13,15 @@ import com.animsh.moviem.ui.home.movies.MoviesFragment
 import com.animsh.moviem.ui.home.mylist.MyListFragment
 import com.animsh.moviem.ui.home.tvs.TvShowsFragment
 import com.animsh.moviem.ui.search.SearchActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val binding = FragmentHomeBinding.bind(view)
         binding.apply {
             toolbar.setBackgroundColor(Color.TRANSPARENT)

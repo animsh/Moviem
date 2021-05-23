@@ -35,5 +35,6 @@
     <color name="simpleIconTintColorLight">#000000</color>
     <color name="blurImageGradientColorLight">#9FFFFFFF</color>
     <color name="redColor">#EE1520</color>
+    <color name="redColorLight">#5FEE1520</color>
 
 </resources>
