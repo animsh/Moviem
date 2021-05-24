@@ -10,16 +10,20 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.animsh.moviem.R
 import com.animsh.moviem.adapters.MovieAdapter
+import com.animsh.moviem.data.database.entity.FavoriteMovieEntity
 import com.animsh.moviem.data.viewmodels.MoviesViewModel
 import com.animsh.moviem.databinding.FragmentMoviesBinding
 import com.animsh.moviem.ui.home.movies.details.MovieDetailsActivity
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.Constants.Companion.API_KEY
 import com.animsh.moviem.util.NetworkResult
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +39,9 @@ class MoviesFragment : Fragment() {
     private val topMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
     private val nowPlayingMoviesAdapter by lazy { MovieAdapter(childFragmentManager) }
     private lateinit var moviesViewModel: MoviesViewModel
+
+    private var movieSaved: Boolean = false
+    private var savedMovieId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +59,78 @@ class MoviesFragment : Fragment() {
         setupRecyclerView()
         requestApiData()
 
-        fragmentMoviesBinding.refreshLayout.setOnRefreshListener {
-            showShimmer()
-            topMoviesAdapter.clearList()
-            popularMoviesAdapter.clearList()
-            nowPlayingMoviesAdapter.clearList()
-            trendingMoviesAdapter.clearList()
-            requestApiData()
-            fragmentMoviesBinding.refreshLayout.isRefreshing = false
+        fragmentMoviesBinding.apply {
+            refreshLayout.setOnRefreshListener {
+                showShimmer()
+                topMoviesAdapter.clearList()
+                popularMoviesAdapter.clearList()
+                nowPlayingMoviesAdapter.clearList()
+                trendingMoviesAdapter.clearList()
+                requestApiData()
+                refreshLayout.isRefreshing = false
+            }
+
+            addToMyList.setOnClickListener {
+                if (movieSaved) {
+                    removeFromFav(addToMyList)
+                } else {
+                    saveToFav(addToMyList)
+                }
+            }
         }
+
     }
+
+    private fun saveToFav(addToMyList: TextView) {
+        val favoriteMovieEntity = FavoriteMovieEntity(0, fragmentMoviesBinding.latestMovie!!)
+        moviesViewModel.insertFavMovie(favoriteMovieEntity)
+        addToMyList.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_check, 0, 0)
+        showMessage("added to my list!!")
+        movieSaved = true
+    }
+
+    private fun removeFromFav(addToMyList: TextView) {
+        val favoriteMovieEntity = FavoriteMovieEntity(
+            savedMovieId,
+            fragmentMoviesBinding.latestMovie!!
+        )
+        moviesViewModel.deleteFavMovie(favoriteMovieEntity)
+        addToMyList.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_add, 0, 0)
+        showMessage("removed from my list!!")
+        movieSaved = false
+    }
+
+    private fun checkFavMovieStatus() {
+        moviesViewModel.readFavMovie.observe(requireActivity(), { favoriteEntity ->
+            try {
+                for (savedMovie in favoriteEntity) {
+                    if (savedMovie.result.id == fragmentMoviesBinding.latestMovie!!.id) {
+                        fragmentMoviesBinding.addToMyList.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            R.drawable.ic_check,
+                            0,
+                            0
+                        )
+                        movieSaved = true
+                        savedMovieId = savedMovie.id
+                        break
+                    } else {
+                        fragmentMoviesBinding.addToMyList.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            R.drawable.ic_add,
+                            0,
+                            0
+                        )
+                        movieSaved = false
+                        savedMovieId = 0
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("TAGTAGTAG", "checkFavMovieStatus: " + e.message)
+            }
+        })
+    }
+
 
     private fun requestApiData() {
         moviesViewModel.getLatestMovie(API_KEY)
@@ -124,7 +193,7 @@ class MoviesFragment : Fragment() {
                                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                                 })
                         }
-
+                        checkFavMovieStatus()
                         Log.d("LOGDATA", "requestApiData: 1")
                     }
                 }
@@ -251,5 +320,14 @@ class MoviesFragment : Fragment() {
         mView.nowPlayingMoviesShowRecyclerview.showShimmer()
         mView.popularMoviesShowRecyclerview.showShimmer()
         mView.topMoviesShowRecyclerview.showShimmer()
+    }
+
+    private fun showMessage(message: String) {
+        Snackbar.make(
+            fragmentMoviesBinding.refreshLayout,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).setAction("Okay") {}
+            .show()
     }
 }

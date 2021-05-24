@@ -1,21 +1,23 @@
 package com.animsh.moviem.data.viewmodels
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.animsh.moviem.data.database.entity.FavoriteMovieEntity
 import com.animsh.moviem.data.repositories.Repository
 import com.animsh.moviem.models.movie.*
 import com.animsh.moviem.util.Constants.Companion.hasInternetConnection
 import com.animsh.moviem.util.NetworkResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Created by animsh on 2/26/2021.
  */
-class MoviesViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MoviesViewModel @Inject constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {

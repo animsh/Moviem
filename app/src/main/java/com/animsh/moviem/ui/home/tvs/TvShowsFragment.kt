@@ -8,10 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.animsh.moviem.R
 import com.animsh.moviem.adapters.TvAdapter
+import com.animsh.moviem.data.database.entity.FavoriteTVEntity
 import com.animsh.moviem.data.viewmodels.TvViewModel
 import com.animsh.moviem.databinding.FragmentTvShowsBinding
 import com.animsh.moviem.ui.home.movies.MoviesBottomSheet
@@ -19,6 +22,7 @@ import com.animsh.moviem.ui.home.tvs.details.TVDetailsActivity
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.Constants.Companion.API_KEY
 import com.animsh.moviem.util.NetworkResult
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.fragment_tv_shows.view.*
@@ -34,6 +38,8 @@ class TvShowsFragment : Fragment() {
     private val topTvAdapter by lazy { TvAdapter(childFragmentManager) }
     private lateinit var tvViewModel: TvViewModel
 
+    private var tvSaved: Boolean = false
+    private var savedTVId: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,17 +55,83 @@ class TvShowsFragment : Fragment() {
         tvViewModel = ViewModelProvider(requireActivity()).get(TvViewModel::class.java)
         setupRecyclerView()
         requestApiData()
+        fragmentTvShowsBinding.apply {
+            refreshLayout.setOnRefreshListener {
+                showShimmer()
+                trendingTvAdapter.clearList()
+                popularTvAdapter.clearList()
+                topTvAdapter.clearList()
+                onAirTvAdapter.clearList()
+                airingTodayTvAdapter.clearList()
+                requestApiData()
+                refreshLayout.isRefreshing = false
+            }
 
-        fragmentTvShowsBinding.refreshLayout.setOnRefreshListener {
-            showShimmer()
-            trendingTvAdapter.clearList()
-            popularTvAdapter.clearList()
-            topTvAdapter.clearList()
-            onAirTvAdapter.clearList()
-            airingTodayTvAdapter.clearList()
-            requestApiData()
-            fragmentTvShowsBinding.refreshLayout.isRefreshing = false
+            addToMyList.setOnClickListener {
+                if (tvSaved) {
+                    removeFromFav(addToMyList)
+                } else {
+                    saveToFav(addToMyList)
+                }
+            }
         }
+    }
+
+
+    private fun saveToFav(addToMyList: TextView) {
+        val favoriteTVEntity = FavoriteTVEntity(0, fragmentTvShowsBinding.latestTv!!)
+        tvViewModel.insertFavTV(favoriteTVEntity)
+        addToMyList.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_check, 0, 0)
+        showMessage("added to my list!!")
+        tvSaved = true
+    }
+
+    private fun removeFromFav(addToMyList: TextView) {
+        val favoriteTVEntity = FavoriteTVEntity(savedTVId, fragmentTvShowsBinding.latestTv!!)
+        tvViewModel.deleteFavTV(favoriteTVEntity)
+        addToMyList.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_add, 0, 0)
+        showMessage("removed from my list!!")
+        tvSaved = false
+    }
+
+    private fun checkFavTVStatus() {
+        tvViewModel.readFavTV.observe(requireActivity(), { favoriteEntity ->
+            try {
+                for (savedTv in favoriteEntity) {
+                    if (savedTv.result.id == fragmentTvShowsBinding.latestTv!!.id) {
+                        fragmentTvShowsBinding.addToMyList.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            R.drawable.ic_check,
+                            0,
+                            0
+                        )
+                        tvSaved = true
+                        savedTVId = savedTv.id
+                        break
+                    } else {
+                        fragmentTvShowsBinding.addToMyList.setCompoundDrawablesWithIntrinsicBounds(
+                            0,
+                            R.drawable.ic_add,
+                            0,
+                            0
+                        )
+                        tvSaved = false
+                        savedTVId = 0
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d("TAGTAGTAG", "checkFavTVStatus: " + e.message)
+            }
+        })
+    }
+
+    private fun showMessage(message: String) {
+        Snackbar.make(
+            fragmentTvShowsBinding.refreshLayout,
+            message,
+            Snackbar.LENGTH_SHORT
+        ).setAction("Okay") {}
+            .show()
     }
 
     private fun requestApiData() {
@@ -125,7 +197,7 @@ class TvShowsFragment : Fragment() {
                                     override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
                                 })
                         }
-
+                        checkFavTVStatus()
                         Log.d("LOGDATA", "requestApiData: 1")
                     }
                 }

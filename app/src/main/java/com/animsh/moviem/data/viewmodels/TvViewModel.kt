@@ -1,7 +1,6 @@
 package com.animsh.moviem.data.viewmodels
 
 import android.app.Application
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.animsh.moviem.data.database.entity.FavoriteTVEntity
 import com.animsh.moviem.data.repositories.Repository
@@ -11,14 +10,17 @@ import com.animsh.moviem.models.tv.TvResponse
 import com.animsh.moviem.models.tv.episodes.SeasonResponse
 import com.animsh.moviem.util.Constants
 import com.animsh.moviem.util.NetworkResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Created by animsh on 2/28/2021.
  */
-class TvViewModel @ViewModelInject constructor(
+@HiltViewModel
+class TvViewModel @Inject constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
