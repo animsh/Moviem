@@ -14,14 +14,28 @@
         android:orientation="vertical"
         tools:context=".ui.home.mylist.MyListFragment">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/choiceBtn"
+            android:layout_alignBottom="@id/choiceBtn"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:gravity="center"
+            android:text="My List"
+            android:textColor="?attr/text_color"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/choiceBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:backgroundTint="?attr/bottom_sheet_color"
             android:textAllCaps="false"

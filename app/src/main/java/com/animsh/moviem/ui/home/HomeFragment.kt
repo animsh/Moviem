@@ -10,14 +10,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.animsh.moviem.R
 import com.animsh.moviem.databinding.FragmentHomeBinding
 import com.animsh.moviem.ui.home.movies.MoviesFragment
-import com.animsh.moviem.ui.home.mylist.MyListFragment
+import com.animsh.moviem.ui.home.mylist.MyListActivity
 import com.animsh.moviem.ui.home.tvs.TvShowsFragment
 import com.animsh.moviem.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,14 +29,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewPagerAdapter.apply {
                 addFragment(MoviesFragment(), "Movies")
                 addFragment(TvShowsFragment(), "TV Shows")
-                addFragment(MyListFragment(), "My List")
             }
             viewPager.apply {
                 adapter = viewPagerAdapter
-                offscreenPageLimit = 3
+                offscreenPageLimit = 2
             }
             searchButton.setOnClickListener {
                 val intent = Intent(requireActivity(), SearchActivity::class.java)
+                startActivity(intent)
+            }
+            myListButton.setOnClickListener {
+                val intent = Intent(requireActivity(), MyListActivity::class.java)
                 startActivity(intent)
             }
         }
