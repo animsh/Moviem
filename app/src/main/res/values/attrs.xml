@@ -14,5 +14,6 @@
         <attr name="bottom_navigation_icon_color" format="color" />
         <attr name="bottom_sheet_color" format="color" />
         <attr name="summary_color" format="color" />
+        <attr name="background_image_circle" format="color" />
     </declare-styleable>
 </resources>

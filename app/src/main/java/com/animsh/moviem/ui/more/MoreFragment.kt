@@ -33,6 +33,12 @@ class MoreFragment : Fragment() {
                 showAlertDialog()
             }
 
+            aboutLayout.setOnClickListener {
+                val openBottomSheet: AboutBottomSheetFragment =
+                    AboutBottomSheetFragment().newInstance()
+                openBottomSheet.show(childFragmentManager, AboutBottomSheetFragment.TAG)
+            }
+
             val sharedPreference =
                 binding!!.root.context.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
             when (sharedPreference.getString("theme", "system default")) {
