@@ -21,7 +21,8 @@ import com.google.android.material.snackbar.Snackbar
  */
 class FavTvAdapter(
     private var activity: Activity,
-    private val tvViewModel: TvViewModel
+    private val tvViewModel: TvViewModel,
+    private val isHome: Boolean
 ) : RecyclerView.Adapter<FavTvAdapter.TvViewHolder>(), ActionMode.Callback {
 
     private var multiSelection = false
@@ -71,17 +72,19 @@ class FavTvAdapter(
                 context?.startActivity(intent)
             }
         }
-        holder.itemView.setOnLongClickListener {
-            if (!multiSelection) {
-                multiSelection = true
-                activity.startActionMode(this)
-                applySelection(holder, currentTv)
-                true
-            } else {
-                applySelection(holder, currentTv)
-                true
-            }
 
+        if (!isHome) {
+            holder.itemView.setOnLongClickListener {
+                if (!multiSelection) {
+                    multiSelection = true
+                    activity.startActionMode(this)
+                    applySelection(holder, currentTv)
+                    true
+                } else {
+                    applySelection(holder, currentTv)
+                    true
+                }
+            }
         }
     }
 

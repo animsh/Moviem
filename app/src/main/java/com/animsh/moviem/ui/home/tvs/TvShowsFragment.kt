@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.R
+import com.animsh.moviem.adapters.FavTvAdapter
 import com.animsh.moviem.adapters.TvAdapter
 import com.animsh.moviem.data.database.entity.FavoriteTVEntity
 import com.animsh.moviem.data.viewmodels.TvViewModel
@@ -40,6 +42,9 @@ class TvShowsFragment : Fragment() {
 
     private var tvSaved: Boolean = false
     private var savedTVId: Int = 0
+
+    private val tvAdapter by lazy { FavTvAdapter(requireActivity(), tvViewModel, true) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,6 +79,23 @@ class TvShowsFragment : Fragment() {
                     saveToFav(addToMyList)
                 }
             }
+
+            myListRecyclerview.layoutManager =
+                GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+            myListRecyclerview.adapter = tvAdapter
+            myListRecyclerview.showShimmer()
+            tvViewModel.readFavTV.observe(viewLifecycleOwner, { favEntity ->
+                if (favEntity.isNotEmpty()) {
+                    myListRecyclerview.hideShimmer()
+                    myListRecyclerview.visibility = View.VISIBLE
+                    myListText.visibility = View.VISIBLE
+                } else {
+                    myListRecyclerview.hideShimmer()
+                    myListRecyclerview.visibility = View.GONE
+                    myListText.visibility = View.GONE
+                }
+                tvAdapter.setData(favEntity)
+            })
         }
     }
 

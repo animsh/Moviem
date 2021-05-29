@@ -188,6 +188,27 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
+                        android:id="@+id/myListText"
+                        style="@style/TextAppearance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:alpha="0.8"
+                        android:text="My List"
+                        android:textColor="?attr/text_color"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/myListRecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:shimmer_recycler_item_count="3"
+                        app:shimmer_recycler_layout="@layout/layout_item_container_placeholder" />
+
+                    <TextView
                         style="@style/TextAppearance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

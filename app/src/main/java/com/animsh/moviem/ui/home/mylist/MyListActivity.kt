@@ -33,7 +33,7 @@ class MyListActivity : AppCompatActivity() {
     private lateinit var tvViewModel: TvViewModel
 
     private val moviesAdapter by lazy { FavMovieAdapter(this, moviesViewModel, false) }
-    private val tvAdapter by lazy { FavTvAdapter(this, tvViewModel) }
+    private val tvAdapter by lazy { FavTvAdapter(this, tvViewModel, false) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
