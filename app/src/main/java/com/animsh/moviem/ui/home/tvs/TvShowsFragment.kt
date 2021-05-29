@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.animsh.moviem.R
 import com.animsh.moviem.adapters.FavTvAdapter
@@ -81,7 +80,8 @@ class TvShowsFragment : Fragment() {
             }
 
             myListRecyclerview.layoutManager =
-                GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
             myListRecyclerview.adapter = tvAdapter
             myListRecyclerview.showShimmer()
             tvViewModel.readFavTV.observe(viewLifecycleOwner, { favEntity ->
