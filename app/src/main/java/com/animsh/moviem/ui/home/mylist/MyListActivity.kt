@@ -32,7 +32,7 @@ class MyListActivity : AppCompatActivity() {
     private lateinit var moviesViewModel: MoviesViewModel
     private lateinit var tvViewModel: TvViewModel
 
-    private val moviesAdapter by lazy { FavMovieAdapter(this, moviesViewModel) }
+    private val moviesAdapter by lazy { FavMovieAdapter(this, moviesViewModel, false) }
     private val tvAdapter by lazy { FavTvAdapter(this, tvViewModel) }
 
 

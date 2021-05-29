@@ -22,7 +22,8 @@ import com.google.android.material.snackbar.Snackbar
  */
 class FavMovieAdapter(
     private var activity: Activity,
-    private val moviesViewModel: MoviesViewModel
+    private val moviesViewModel: MoviesViewModel,
+    private val isHome: Boolean
 ) : RecyclerView.Adapter<FavMovieAdapter.MovieViewHolder>(), ActionMode.Callback {
 
     private var multiSelection = false
@@ -75,17 +76,20 @@ class FavMovieAdapter(
             }
         }
 
-        holder.itemView.setOnLongClickListener {
-            if (!multiSelection) {
-                multiSelection = true
-                activity.startActionMode(this)
-                applySelection(holder, currentMovie)
-                true
-            } else {
-                applySelection(holder, currentMovie)
-                true
+        if (!isHome) {
+            holder.itemView.setOnLongClickListener {
+                if (!multiSelection) {
+                    multiSelection = true
+                    activity.startActionMode(this)
+                    applySelection(holder, currentMovie)
+                    true
+                } else {
+                    applySelection(holder, currentMovie)
+                    true
+                }
             }
         }
+
     }
 
     override fun getItemCount(): Int {
